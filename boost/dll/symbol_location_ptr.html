@@ -32,21 +32,21 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_dll/reference.html#header.boost.dll.runtime_symbol_info_hpp" title="Header &lt;boost/dll/runtime_symbol_info.hpp&gt;">boost/dll/runtime_symbol_info.hpp</a>&gt;
 
 </span>
-<span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> 
-<span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> ptr_to_symbol<span class="special">,</span> 
-                    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="special">&amp;</span> ec<span class="special">)</span><span class="special">;</span>
-<span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> ptr_to_symbol<span class="special">)</span><span class="special">;</span></pre></div>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> 
+  <span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="identifier">T</span> ptr_to_symbol<span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="special">&amp;</span> ec<span class="special">)</span><span class="special">;</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="identifier">T</span> ptr_to_symbol<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45531615135584"></a><h2>Description</h2>
+<a name="idm45987810154704"></a><h2>Description</h2>
 <p>On success returns full path and name to the binary object that holds symbol pointed by ptr_to_symbol.</p>
 <p>
 
 
 <span class="bold"><strong>Examples:</strong></span> </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="special">)</span> <span class="special">{</span>
-   <span class="identifier">dll</span><span class="special">::</span><span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGSEGV</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// returns "/some/path/libmy_signal_handler.so"</span>
-   <span class="identifier">dll</span><span class="special">::</span><span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="special">&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span><span class="special">)</span><span class="special">;</span>                  <span class="comment">// returns location of libstdc++: "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"</span>
-   <span class="identifier">dll</span><span class="special">::</span><span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="special">&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">puts</span><span class="special">)</span><span class="special">;</span>                  <span class="comment">// returns location of libc: "/lib/x86_64-linux-gnu/libc.so.6"</span>
+   <span class="identifier">dll</span><span class="special">::</span><span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">set_terminate</span><span class="special">(</span><span class="number">0</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>       <span class="comment">// returns "/some/path/libmy_terminate_handler.so"</span>
+   <span class="identifier">dll</span><span class="special">::</span><span class="identifier">symbol_location_ptr</span><span class="special">(</span><span class="special">::</span><span class="identifier">signal</span><span class="special">(</span><span class="identifier">SIGSEGV</span><span class="special">,</span> <span class="identifier">SIG_DFL</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// returns "/some/path/libmy_symbol_handler.so"</span>
 <span class="special">}</span>
 </pre>
 <p> </p>
