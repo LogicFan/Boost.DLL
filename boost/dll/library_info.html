@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.DLL">
 <link rel="up" href="../../boost_dll/reference.html#header.boost.dll.library_info_hpp" title="Header &lt;boost/dll/library_info.hpp&gt;">
-<link rel="prev" href="../../BOOST_DLL_AUTO_ALIAS.html" title="Macro BOOST_DLL_AUTO_ALIAS">
+<link rel="prev" href="../../BOOST_DLL_USE_STD_FS.html" title="Macro BOOST_DLL_USE_STD_FS">
 <link rel="next" href="symbol_location_ptr.html" title="Function symbol_location_ptr">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../../BOOST_DLL_AUTO_ALIAS.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_dll/reference.html#header.boost.dll.library_info_hpp"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="symbol_location_ptr.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../BOOST_DLL_USE_STD_FS.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_dll/reference.html#header.boost.dll.library_info_hpp"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="symbol_location_ptr.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.dll.library_info"></a><div class="titlepage"></div>
@@ -35,25 +35,25 @@
 <span class="keyword">class</span> <a class="link" href="library_info.html" title="Class library_info">library_info</a> <span class="special">:</span> <span class="keyword">private</span> <span class="identifier">noncopyable</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="library_info.html#boost.dll.library_infoconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="library_info.html#idm46573640598976-bb"><span class="identifier">library_info</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="library_info.html#idm46573640595312-bb"><span class="special">~</span><span class="identifier">library_info</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="library_info.html#idm45612473733376-bb"><span class="identifier">library_info</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">fs</span><span class="special">::</span><span class="identifier">path</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="library_info.html#idm45612473729712-bb"><span class="special">~</span><span class="identifier">library_info</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="library_info.html#idm46573640608160-bb">public member functions</a></span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm46573640607600-bb"><span class="identifier">sections</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm46573640605872-bb"><span class="identifier">symbols</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm46573640604112-bb"><span class="identifier">symbols</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm46573640601232-bb"><span class="identifier">symbols</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="library_info.html#idm45612473742560-bb">public member functions</a></span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm45612473742000-bb"><span class="identifier">sections</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm45612473740272-bb"><span class="identifier">symbols</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm45612473738512-bb"><span class="identifier">symbols</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a class="link" href="library_info.html#idm45612473735632-bb"><span class="identifier">symbols</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45987810337152"></a><h2>Description</h2>
+<a name="idm46751176350464"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idm45987810336736"></a><h3>
+<a name="idm46751176350048"></a><h3>
 <a name="boost.dll.library_infoconstruct-copy-destruct"></a><code class="computeroutput">library_info</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm46573640598976-bb"></a><span class="identifier">library_info</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="special">&amp;</span> library_path<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45612473733376-bb"></a><span class="identifier">library_info</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">fs</span><span class="special">::</span><span class="identifier">path</span> <span class="special">&amp;</span> library_path<span class="special">,</span> 
                       <span class="keyword">bool</span> throw_if_not_native_format <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Opens file with specified path and prepares for information extraction. 
 </p>
@@ -78,7 +78,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idm46573640595312-bb"></a><span class="special">~</span><span class="identifier">library_info</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45612473729712-bb"></a><span class="special">~</span><span class="identifier">library_info</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -92,11 +92,11 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45987810312800"></a><h3>
-<a name="idm46573640608160-bb"></a><code class="computeroutput">library_info</code> public member functions</h3>
+<a name="idm46751176325136"></a><h3>
+<a name="idm45612473742560-bb"></a><code class="computeroutput">library_info</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm46573640607600-bb"></a><span class="identifier">sections</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm45612473742000-bb"></a><span class="identifier">sections</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -108,7 +108,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm46573640605872-bb"></a><span class="identifier">symbols</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm45612473740272-bb"></a><span class="identifier">symbols</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -120,7 +120,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm46573640604112-bb"></a><span class="identifier">symbols</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> section_name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm45612473738512-bb"></a><span class="identifier">symbols</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> section_name<span class="special">)</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -145,7 +145,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm46573640601232-bb"></a><span class="identifier">symbols</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> section_name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <a name="idm45612473735632-bb"></a><span class="identifier">symbols</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> section_name<span class="special">)</span><span class="special">;</span></pre>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
 </li>
 </ol></div>
@@ -154,7 +154,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<br>Copyright &#169; 2017-2019 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>
@@ -162,7 +162,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../../BOOST_DLL_AUTO_ALIAS.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_dll/reference.html#header.boost.dll.library_info_hpp"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="symbol_location_ptr.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../BOOST_DLL_USE_STD_FS.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_dll/reference.html#header.boost.dll.library_info_hpp"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="symbol_location_ptr.html"><img src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
