@@ -14,7 +14,6 @@
 #include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
 #include <boost/core/enable_if.hpp>
-#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/type_traits/is_member_pointer.hpp>
 #include <boost/dll/detail/system_error.hpp>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
@@ -311,7 +310,10 @@ public:
     * \return true if a library has been loaded.
     * \throw Nothing.
     */
-    BOOST_EXPLICIT_OPERATOR_BOOL()
+    inline explicit operator bool () const
+    {
+        return !this->operator!();
+    }
 
     /*!
     * Search for a given symbol on loaded library. Works for all symbols, including alias names.

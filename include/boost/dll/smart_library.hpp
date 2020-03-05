@@ -368,7 +368,10 @@ public:
     }
 
     //! \copydoc shared_library::operator bool() const
-    BOOST_EXPLICIT_OPERATOR_BOOL()
+    inline explicit operator bool () const
+    {
+        return !this->operator!();
+    }
 
     //! \copydoc shared_library::has(const char* symbol_name) const
     bool has(const char* symbol_name) const noexcept {
