@@ -17,7 +17,7 @@ namespace my_namespace {
 class my_plugin_sum : public my_plugin_api {
 public:
     my_plugin_sum() {
-        std::cout << "Constructing my_plugin_sum" << std::endl;
+        std::cout << "Constructing plugin" << std::endl;
     }
 
     std::string name() const {
@@ -29,7 +29,7 @@ public:
     }
    
     ~my_plugin_sum() {
-        std::cout << "Destructing my_plugin_sum ;o)" << std::endl;
+        std::cout << "Destructing plugin" << std::endl;
     }
 };
 
