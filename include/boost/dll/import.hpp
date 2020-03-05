@@ -11,7 +11,6 @@
 #include <boost/core/addressof.hpp>
 #include <boost/core/enable_if.hpp>
 #include <boost/dll/shared_library.hpp>
-#include <boost/move/move.hpp>
 
 #if defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) || defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #   include <boost/function.hpp>
@@ -22,6 +21,7 @@
 #include <memory>
 #include <functional>
 #include <type_traits>
+#include <utility>
 
 /// \file boost/dll/import.hpp
 /// \brief Contains all the boost::dll::import* reference counting
@@ -166,7 +166,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char
     typedef typename boost::dll::detail::import_type<T>::base_type type;
 
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(
-        boost::move(lib)
+        std::move(lib)
     );
     return type(p, boost::addressof(p->get<T>(name)));
 }
@@ -174,7 +174,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const std::string& name) {
-    return import<T>(boost::move(lib), name.c_str());
+    return import<T>(std::move(lib), name.c_str());
 }
 
 
@@ -256,7 +256,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, cons
     typedef typename boost::dll::detail::import_type<T>::base_type type;
 
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(
-        boost::move(lib)
+        std::move(lib)
     );
     return type(p, p->get<T*>(name));
 }
@@ -264,7 +264,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, cons
 //! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, const std::string& name) {
-    return import_alias<T>(boost::move(lib), name.c_str());
+    return import_alias<T>(std::move(lib), name.c_str());
 }
 
 #undef BOOST_DLL_IMPORT_RESULT_TYPE

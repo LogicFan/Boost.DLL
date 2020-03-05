@@ -27,6 +27,7 @@
 
 #include <filesystem>
 #include <system_error>
+#include <utility>
 
 namespace boost { namespace dll {
 
@@ -102,7 +103,7 @@ public:
     * \throw Nothing.
     */
     shared_library(BOOST_RV_REF(shared_library) lib) noexcept
-        : base_t(boost::move(static_cast<base_t&>(lib)))
+        : base_t(std::move(static_cast<base_t&>(lib)))
     {}
 
     /*!

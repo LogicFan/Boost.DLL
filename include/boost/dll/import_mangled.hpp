@@ -8,7 +8,6 @@
 #pragma once
 
 #include <boost/dll/config.hpp>
-#include <boost/move/move.hpp>
 #include <boost/dll/smart_library.hpp>
 #include <boost/dll/detail/import_mangled_helpers.hpp>
 #include <boost/core/addressof.hpp>
@@ -19,6 +18,7 @@
 #include <system_error>
 #include <memory>
 #include <type_traits>
+#include <utility>
 
 namespace boost { namespace dll { namespace experimental {
 
@@ -263,7 +263,7 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(smart_library) 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class ...Args>
 BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(smart_library) lib, const std::string& name) {
-    return import_mangled<Args...>(boost::move(lib), name.c_str());
+    return import_mangled<Args...>(std::move(lib), name.c_str());
 }
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
@@ -286,7 +286,7 @@ template <class ...Args>
 BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library) lib, const char* name) {
     typedef typename boost::dll::experimental::detail::mangled_import_type<detail::sequence<Args...>> type;
 
-    boost::dll::experimental::smart_library p(boost::move(lib));
+    boost::dll::experimental::smart_library p(std::move(lib));
 
     return type::make(p, name);
 }
@@ -294,7 +294,7 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library)
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class ...Args>
 BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library) lib, const std::string& name) {
-    return import_mangled<Args...>(boost::move(lib), name.c_str());
+    return import_mangled<Args...>(std::move(lib), name.c_str());
 }
 
 #undef BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE

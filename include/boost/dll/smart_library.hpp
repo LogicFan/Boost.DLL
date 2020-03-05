@@ -25,6 +25,7 @@
 #include <filesystem>
 #include <system_error>
 #include <type_traits>
+#include <utility>
 
 namespace boost {
 namespace dll {
@@ -123,7 +124,7 @@ public:
     * \throw Nothing.
     */
     smart_library(BOOST_RV_REF(smart_library) lib) noexcept
-        : _lib(boost::move(lib._lib)), _storage(boost::move(lib._storage))
+        : _lib(std::move(lib._lib)), _storage(std::move(lib._storage))
     {}
 
     /*!
@@ -146,7 +147,7 @@ public:
      * \throw Nothing.
      */
      explicit smart_library(BOOST_RV_REF(shared_library) lib) noexcept
-         : _lib(boost::move(static_cast<shared_library&>(lib)))
+         : _lib(std::move(static_cast<shared_library&>(lib)))
      {
          _storage.load(lib.location());
      }
