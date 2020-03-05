@@ -1,3 +1,10 @@
+# About This Branch
+
+The goal for this branch is to remove all depandency from boost, whereas preserve the functionality of the
+Boost.DLL library.
+
+The following text are from orignal repo.
+
 # [Boost Dynamic Library Load (Boost.DLL)](http://boost.org/libs/dll)
 
 Boost.DLL is a part of the [Boost C++ Libraries](http://github.com/boostorg). It is a library for comfortable work with DLL and DSO.
