@@ -9,7 +9,6 @@
 #include <boost/type_traits/conditional.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_class.hpp>
-#include <boost/type_traits/is_function.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 
 #include <type_traits>
@@ -44,13 +43,13 @@ template<class T> struct is_function_seq;
 //type-trait for function overloads
 template<class Class, class...Args> struct is_function_seq<sequence<Class, Args...>>
             : boost::conditional<
-                boost::is_function<Class>::value,
+                std::is_function<Class>::value,
                 is_function_seq<sequence<Args...>>,
                 boost::false_type>::type
 {};
 
 template<class Class>
-struct is_function_seq<sequence<Class>> : boost::is_function<Class>
+struct is_function_seq<sequence<Class>> : std::is_function<Class>
 {
 };
 
@@ -199,7 +198,7 @@ template<class T, class U, class ...Args>
 struct is_mem_fn_seq_impl
 {
     typedef typename boost::conditional<
-                 boost::is_function<U>::value || boost::dll::experimental::detail::unqalified_is_same<T, U>::value,
+                 std::is_function<U>::value || boost::dll::experimental::detail::unqalified_is_same<T, U>::value,
                  typename is_mem_fn_seq_impl<T, Args...>::type,
                  boost::false_type>::type type;
 };
@@ -208,7 +207,7 @@ template<class T, class U>
 struct is_mem_fn_seq_impl<T, U>
 {
     typedef typename boost::conditional<
-                 boost::is_function<U>::value && std::is_object<T>::value,
+                 std::is_function<U>::value && std::is_object<T>::value,
                  boost::true_type, boost::false_type>::type type;
 };
 
@@ -216,8 +215,8 @@ template<class T, class U, class Last>
 struct is_mem_fn_seq_impl<T, U, Last>
 {
     typedef typename boost::conditional<
-                 (boost::is_function<U>::value || boost::dll::experimental::detail::unqalified_is_same<T, U>::value)
-                 && boost::is_function<Last>::value,
+                 (std::is_function<U>::value || boost::dll::experimental::detail::unqalified_is_same<T, U>::value)
+                 && std::is_function<Last>::value,
                  boost::true_type, boost::false_type>::type type;
 };
 
@@ -226,7 +225,7 @@ template<class T> struct is_mem_fn_seq : boost::false_type {};
 //If only two arguments are provided at all.
 template<class T, class U>
 struct is_mem_fn_seq<sequence<T, U>> : boost::conditional<
-                 std::is_object<T>::value && boost::is_function<U>::value,
+                 std::is_object<T>::value && std::is_function<U>::value,
                  boost::true_type, boost::false_type>::type
 {
 };
@@ -235,7 +234,7 @@ struct is_mem_fn_seq<sequence<T, U>> : boost::conditional<
 template<class T, class Func, class ...Args>
 struct is_mem_fn_seq<sequence<T, Func, Args...>> :
         boost::conditional<
-            boost::is_class<T>::value && boost::is_function<Func>::value,
+            boost::is_class<T>::value && std::is_function<Func>::value,
             typename is_mem_fn_seq_impl<T, Args...>::type,
             boost::false_type>::type {};
 

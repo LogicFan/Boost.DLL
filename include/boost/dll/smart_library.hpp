@@ -21,7 +21,6 @@
 #include <boost/dll/detail/get_mem_fn_type.hpp>
 #include <boost/dll/detail/ctor_dtor.hpp>
 #include <boost/dll/detail/type_info.hpp>
-#include <boost/type_traits/is_function.hpp>
 
 #include <filesystem>
 #include <system_error>
@@ -442,7 +441,7 @@ T& get(const smart_library& sm, const std::string &name, typename boost::enable_
 }
 
 template<class T>
-auto get(const smart_library& sm, const std::string &name, typename boost::enable_if<boost::is_function<T>>::type* = nullptr)
+auto get(const smart_library& sm, const std::string &name, typename boost::enable_if<std::is_function<T>>::type* = nullptr)
 {
     return sm.get_function<T>(name);
 }
