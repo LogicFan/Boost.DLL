@@ -46,14 +46,9 @@ class shared_library
 /// @endcond
 {
     typedef boost::dll::detail::shared_library_impl base_t;
-    BOOST_COPYABLE_AND_MOVABLE(shared_library)
 
 public:
-#ifdef BOOST_DLL_DOXYGEN
-    typedef platform_specific native_handle_t;
-#else
     typedef shared_library_impl::native_handle_t native_handle_t;
-#endif
 
     /*!
     * Creates in anstance that does not reference any DLL/DSO.
@@ -99,7 +94,7 @@ public:
     * \post lib.is_loaded() returns false, this->is_loaded() return true.
     * \throw Nothing.
     */
-    shared_library(BOOST_RV_REF(shared_library) lib) noexcept
+    shared_library(shared_library &&lib) noexcept
         : base_t(std::move(static_cast<base_t&>(lib)))
     {}
 
@@ -140,7 +135,7 @@ public:
     * \post lib == *this
     * \throw \forcedlinkfs{system_error}, std::bad_alloc in case of insufficient memory.
     */
-    shared_library& operator=(BOOST_COPY_ASSIGN_REF(shared_library) lib) {
+    shared_library& operator=(shared_library &lib) {
         std::error_code ec;
         assign(lib, ec);
         if (ec) {
@@ -157,7 +152,7 @@ public:
     * \post lib.is_loaded() returns false.
     * \throw Nothing.
     */
-    shared_library& operator=(BOOST_RV_REF(shared_library) lib) noexcept {
+    shared_library& operator=(shared_library &&lib) noexcept {
         if (lib.native() != native()) {
             swap(lib);
         }
@@ -409,11 +404,9 @@ private:
             );
 
             // report_error() calls dlsym, do not use it here!
-            boost::throw_exception(
-                std::system_error(
+            throw std::system_error(
                     ec, "boost::dll::shared_library::get() failed: no library was loaded"
-                )
-            );
+                );
         }
 
         void* const ret = base_t::symbol_addr(sb, ec);
@@ -455,11 +448,9 @@ public:
                 std::errc::bad_file_descriptor
             );
 
-            boost::throw_exception(
-                std::system_error(
+            throw std::system_error(
                     ec, "boost::dll::shared_library::location() failed (no library was loaded)"
-                )
-            );
+                );
         }
 
         std::filesystem::path full_path = base_t::full_module_path(ec);
