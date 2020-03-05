@@ -6,7 +6,7 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <iostream>
-#include <boost/make_shared.hpp>
+#include <memory>
 
 // MinGW related workaround
 #define BOOST_DLL_FORCE_ALIAS_INSTANTIATION
@@ -32,8 +32,8 @@ public:
     }
 
     // Factory method
-    static boost::shared_ptr<my_plugin_aggregator> create() {
-        return boost::shared_ptr<my_plugin_aggregator>(
+    static std::shared_ptr<my_plugin_aggregator> create() {
+        return std::shared_ptr<my_plugin_aggregator>(
             new my_plugin_aggregator()
         );
     }
