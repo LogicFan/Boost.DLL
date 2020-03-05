@@ -21,6 +21,7 @@
 #include <filesystem>
 #include <system_error>
 #include <memory>
+#include <functional>
 
 /// \file boost/dll/import.hpp
 /// \brief Contains all the boost::dll::import* reference counting
@@ -73,7 +74,7 @@ namespace detail {
         typedef boost::dll::detail::library_function<T> base_type;
 
 #if defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) || defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-        typedef boost::function<T>                      type;
+        typedef std::function<T>                      type;
 #else
         typedef boost::dll::detail::library_function<T> type;
 #endif
@@ -106,7 +107,7 @@ namespace detail {
 * \b Examples:
 *
 * \code
-* boost::function<int(int)> f = import<int(int)>("test_lib.so", "integer_func_name");
+* std::function<int(int)> f = import<int(int)>("test_lib.so", "integer_func_name");
 *
 * auto f_cpp11 = import<int(int)>("test_lib.so", "integer_func_name");
 * \endcode
@@ -193,7 +194,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const std:
 * \b Examples:
 *
 * \code
-* boost::function<int(int)> f = import_alias<int(int)>("test_lib.so", "integer_func_alias_name");
+* std::function<int(int)> f = import_alias<int(int)>("test_lib.so", "integer_func_alias_name");
 *
 * auto f_cpp11 = import_alias<int(int)>("test_lib.so", "integer_func_alias_name");
 * \endcode
