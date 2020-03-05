@@ -29,21 +29,21 @@ class shared_library_impl {
 public:
     typedef boost::winapi::HMODULE_ native_handle_t;
 
-    shared_library_impl() BOOST_NOEXCEPT
+    shared_library_impl() noexcept
         : handle_(NULL)
     {}
 
-    ~shared_library_impl() BOOST_NOEXCEPT {
+    ~shared_library_impl() noexcept {
         unload();
     }
 
-    shared_library_impl(BOOST_RV_REF(shared_library_impl) sl) BOOST_NOEXCEPT
+    shared_library_impl(BOOST_RV_REF(shared_library_impl) sl) noexcept
         : handle_(sl.handle_)
     {
         sl.handle_ = NULL;
     }
 
-    shared_library_impl & operator=(BOOST_RV_REF(shared_library_impl) sl) BOOST_NOEXCEPT {
+    shared_library_impl & operator=(BOOST_RV_REF(shared_library_impl) sl) noexcept {
         swap(sl);
         return *this;
     }
@@ -109,18 +109,18 @@ public:
         }
     }
 
-    bool is_loaded() const BOOST_NOEXCEPT {
+    bool is_loaded() const noexcept {
         return (handle_ != 0);
     }
 
-    void unload() BOOST_NOEXCEPT {
+    void unload() noexcept {
         if (handle_) {
             boost::winapi::FreeLibrary(handle_);
             handle_ = 0;
         }
     }
 
-    void swap(shared_library_impl& rhs) BOOST_NOEXCEPT {
+    void swap(shared_library_impl& rhs) noexcept {
         boost::swap(handle_, rhs.handle_);
     }
 
@@ -132,7 +132,7 @@ public:
         return L".dll";
     }
 
-    void* symbol_addr(const char* sb, std::error_code &ec) const BOOST_NOEXCEPT {
+    void* symbol_addr(const char* sb, std::error_code &ec) const noexcept {
         if (is_resource()) {
             // `GetProcAddress` could not be called for libraries loaded with
             // `LOAD_LIBRARY_AS_DATAFILE`, `LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE`
@@ -157,7 +157,7 @@ public:
         return symbol;
     }
 
-    native_handle_t native() const BOOST_NOEXCEPT {
+    native_handle_t native() const noexcept {
         return handle_;
     }
 
@@ -179,7 +179,7 @@ private:
         return false;
     }
 
-    bool is_resource() const BOOST_NOEXCEPT {
+    bool is_resource() const noexcept {
         return false; /*!!(
             reinterpret_cast<boost::winapi::ULONG_PTR_>(handle_) & static_cast<boost::winapi::ULONG_PTR_>(3)
         );*/

@@ -39,12 +39,12 @@ namespace detail {
         std::shared_ptr<T>   f_;
 
     public:
-        inline library_function(const std::shared_ptr<shared_library>& lib, T* func_ptr) BOOST_NOEXCEPT
+        inline library_function(const std::shared_ptr<shared_library>& lib, T* func_ptr) noexcept
             : f_(lib, func_ptr)
         {}
 
 #if defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) || defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-        operator T*() const BOOST_NOEXCEPT {
+        operator T*() const noexcept {
             return f_.get();
         }
 #else

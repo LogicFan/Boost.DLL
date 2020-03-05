@@ -191,7 +191,7 @@ private:
         }
     }
 
-    static bool is_visible(const symbol_t& sym) BOOST_NOEXCEPT {
+    static bool is_visible(const symbol_t& sym) noexcept {
         // `(sym.st_info >> 4) != STB_LOCAL_ && !!sym.st_size` check also workarounds the
         // GCC's issue https://sourceware.org/bugzilla/show_bug.cgi?id=13621
         return (sym.st_other & 0x03) == STV_DEFAULT_ && (sym.st_info >> 4) != STB_LOCAL_ && !!sym.st_size;

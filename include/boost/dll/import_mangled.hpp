@@ -33,7 +33,7 @@ class mangled_library_function {
     std::shared_ptr<shared_library> lib_;
     function_tuple<Ts...>   f_;
 public:
-    constexpr mangled_library_function(const std::shared_ptr<shared_library>& lib, Ts*... func_ptr) BOOST_NOEXCEPT
+    constexpr mangled_library_function(const std::shared_ptr<shared_library>& lib, Ts*... func_ptr) noexcept
         : lib_(lib)
         , f_(func_ptr...)
     {}
@@ -67,7 +67,7 @@ class mangled_library_mem_fn<Class, sequence<Ts...>> {
     call_tuple_t f_;
 
 public:
-    constexpr mangled_library_mem_fn(const std::shared_ptr<shared_library>& lib, typename Ts::mem_fn... func_ptr) BOOST_NOEXCEPT
+    constexpr mangled_library_mem_fn(const std::shared_ptr<shared_library>& lib, typename Ts::mem_fn... func_ptr) noexcept
         : lib_(lib)
         , f_(func_ptr...)
     {}

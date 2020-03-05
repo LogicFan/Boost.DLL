@@ -88,7 +88,7 @@ public:
     mangled_storage &symbol_storage() {return _storage;}
 
     //! \copydoc shared_library::shared_library()
-    smart_library() BOOST_NOEXCEPT {};
+    smart_library() noexcept {};
 
     //! \copydoc shared_library::shared_library(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode)
     smart_library(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode) {
@@ -112,7 +112,7 @@ public:
      *
      * \throw Nothing.
      */
-     smart_library(const smart_library & lib) BOOST_NOEXCEPT
+     smart_library(const smart_library & lib) noexcept
          : _lib(lib._lib), _storage(lib._storage)
      {}
    /*!
@@ -122,7 +122,7 @@ public:
     *
     * \throw Nothing.
     */
-    smart_library(BOOST_RV_REF(smart_library) lib) BOOST_NOEXCEPT
+    smart_library(BOOST_RV_REF(smart_library) lib) noexcept
         : _lib(boost::move(lib._lib)), _storage(boost::move(lib._storage))
     {}
 
@@ -133,7 +133,7 @@ public:
       *
       * \throw Nothing.
       */
-      explicit smart_library(const shared_library & lib) BOOST_NOEXCEPT
+      explicit smart_library(const shared_library & lib) noexcept
           : _lib(lib)
       {
           _storage.load(lib.location());
@@ -145,7 +145,7 @@ public:
      *
      * \throw Nothing.
      */
-     explicit smart_library(BOOST_RV_REF(shared_library) lib) BOOST_NOEXCEPT
+     explicit smart_library(BOOST_RV_REF(shared_library) lib) noexcept
          : _lib(boost::move(static_cast<shared_library&>(lib)))
      {
          _storage.load(lib.location());
@@ -159,7 +159,7 @@ public:
     *
     * \throw Nothing.
     */
-    ~smart_library() BOOST_NOEXCEPT {};
+    ~smart_library() noexcept {};
 
     //! \copydoc shared_library::load(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode)
     void load(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode) {
@@ -351,18 +351,18 @@ public:
     }
 
     //! \copydoc shared_library::unload()
-    void unload() BOOST_NOEXCEPT {
+    void unload() noexcept {
         _storage.clear();
         _lib.unload();
     }
 
     //! \copydoc shared_library::is_loaded() const
-    bool is_loaded() const BOOST_NOEXCEPT {
+    bool is_loaded() const noexcept {
         return _lib.is_loaded();
     }
 
     //! \copydoc shared_library::operator!() const
-    bool operator!() const BOOST_NOEXCEPT {
+    bool operator!() const noexcept {
         return !is_loaded();
     }
 
@@ -370,12 +370,12 @@ public:
     BOOST_EXPLICIT_OPERATOR_BOOL()
 
     //! \copydoc shared_library::has(const char* symbol_name) const
-    bool has(const char* symbol_name) const BOOST_NOEXCEPT {
+    bool has(const char* symbol_name) const noexcept {
         return _lib.has(symbol_name);
     }
 
     //! \copydoc shared_library::has(const std::string& symbol_name) const
-    bool has(const std::string& symbol_name) const BOOST_NOEXCEPT {
+    bool has(const std::string& symbol_name) const noexcept {
         return _lib.has(symbol_name);
     }
 
@@ -387,29 +387,29 @@ public:
     }
 
     //! \copydoc shared_library::swap(shared_library& rhs)
-    void swap(smart_library& rhs) BOOST_NOEXCEPT {
+    void swap(smart_library& rhs) noexcept {
         _lib.swap(rhs._lib);
         _storage.swap(rhs._storage);
     }
 };
 
 /// Very fast equality check that compares the actual DLL/DSO objects. Throws nothing.
-inline bool operator==(const smart_library& lhs, const smart_library& rhs) BOOST_NOEXCEPT {
+inline bool operator==(const smart_library& lhs, const smart_library& rhs) noexcept {
     return lhs.shared_lib().native() == rhs.shared_lib().native();
 }
 
 /// Very fast inequality check that compares the actual DLL/DSO objects. Throws nothing.
-inline bool operator!=(const smart_library& lhs, const smart_library& rhs) BOOST_NOEXCEPT {
+inline bool operator!=(const smart_library& lhs, const smart_library& rhs) noexcept {
     return lhs.shared_lib().native() != rhs.shared_lib().native();
 }
 
 /// Compare the actual DLL/DSO objects without any guarantee to be stable between runs. Throws nothing.
-inline bool operator<(const smart_library& lhs, const smart_library& rhs) BOOST_NOEXCEPT {
+inline bool operator<(const smart_library& lhs, const smart_library& rhs) noexcept {
     return lhs.shared_lib().native() < rhs.shared_lib().native();
 }
 
 /// Swaps two shared libraries. Does not invalidate symbols and functions loaded from libraries. Throws nothing.
-inline void swap(smart_library& lhs, smart_library& rhs) BOOST_NOEXCEPT {
+inline void swap(smart_library& lhs, smart_library& rhs) noexcept {
     lhs.swap(rhs);
 }
 

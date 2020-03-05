@@ -63,7 +63,7 @@ public:
     * \post this->is_loaded() returns false.
     * \throw Nothing.
     */
-    shared_library() BOOST_NOEXCEPT {}
+    shared_library() noexcept {}
 
     /*!
     * Copy constructor that increments the reference count of an underlying shared library.
@@ -101,7 +101,7 @@ public:
     * \post lib.is_loaded() returns false, this->is_loaded() return true.
     * \throw Nothing.
     */
-    shared_library(BOOST_RV_REF(shared_library) lib) BOOST_NOEXCEPT
+    shared_library(BOOST_RV_REF(shared_library) lib) noexcept
         : base_t(boost::move(static_cast<base_t&>(lib)))
     {}
 
@@ -159,7 +159,7 @@ public:
     * \post lib.is_loaded() returns false.
     * \throw Nothing.
     */
-    shared_library& operator=(BOOST_RV_REF(shared_library) lib) BOOST_NOEXCEPT {
+    shared_library& operator=(BOOST_RV_REF(shared_library) lib) noexcept {
         if (lib.native() != native()) {
             swap(lib);
         }
@@ -174,7 +174,7 @@ public:
     *
     * \throw Nothing.
     */
-    ~shared_library() BOOST_NOEXCEPT {}
+    ~shared_library() noexcept {}
 
     /*!
     * Makes *this share the same shared object as lib. If *this is loaded, then unloads it.
@@ -280,7 +280,7 @@ public:
     * \post this->is_loaded() returns false.
     * \throw Nothing.
     */
-    void unload() BOOST_NOEXCEPT {
+    void unload() noexcept {
         base_t::unload();
     }
 
@@ -290,7 +290,7 @@ public:
     * \return true if a library has been loaded.
     * \throw Nothing.
     */
-    bool is_loaded() const BOOST_NOEXCEPT {
+    bool is_loaded() const noexcept {
         return base_t::is_loaded();
     }
 
@@ -300,7 +300,7 @@ public:
     * \return true if a library has not been loaded.
     * \throw Nothing.
     */
-    bool operator!() const BOOST_NOEXCEPT {
+    bool operator!() const noexcept {
         return !is_loaded();
     }
 
@@ -319,13 +319,13 @@ public:
     * \return `true` if the loaded library contains a symbol with a given name.
     * \throw Nothing.
     */
-    bool has(const char* symbol_name) const BOOST_NOEXCEPT {
+    bool has(const char* symbol_name) const noexcept {
         std::error_code ec;
         return is_loaded() && !!base_t::symbol_addr(symbol_name, ec) && !ec;
     }
 
     //! \overload bool has(const char* symbol_name) const
-    bool has(const std::string& symbol_name) const BOOST_NOEXCEPT {
+    bool has(const std::string& symbol_name) const noexcept {
         return has(symbol_name.c_str());
     }
 
@@ -431,7 +431,7 @@ public:
     *
     * \return Platform-specific handle.
     */
-    native_handle_t native() const BOOST_NOEXCEPT {
+    native_handle_t native() const noexcept {
         return base_t::native();
     }
 
@@ -535,7 +535,7 @@ public:
     * \param rhs Library to swap with.
     * \throw Nothing.
     */
-    void swap(shared_library& rhs) BOOST_NOEXCEPT {
+    void swap(shared_library& rhs) noexcept {
         base_t::swap(rhs);
     }
 };
@@ -543,22 +543,22 @@ public:
 
 
 /// Very fast equality check that compares the actual DLL/DSO objects. Throws nothing.
-inline bool operator==(const shared_library& lhs, const shared_library& rhs) BOOST_NOEXCEPT {
+inline bool operator==(const shared_library& lhs, const shared_library& rhs) noexcept {
     return lhs.native() == rhs.native();
 }
 
 /// Very fast inequality check that compares the actual DLL/DSO objects. Throws nothing.
-inline bool operator!=(const shared_library& lhs, const shared_library& rhs) BOOST_NOEXCEPT {
+inline bool operator!=(const shared_library& lhs, const shared_library& rhs) noexcept {
     return lhs.native() != rhs.native();
 }
 
 /// Compare the actual DLL/DSO objects without any guarantee to be stable between runs. Throws nothing.
-inline bool operator<(const shared_library& lhs, const shared_library& rhs) BOOST_NOEXCEPT {
+inline bool operator<(const shared_library& lhs, const shared_library& rhs) noexcept {
     return lhs.native() < rhs.native();
 }
 
 /// Swaps two shared libraries. Does not invalidate symbols and functions loaded from libraries. Throws nothing.
-inline void swap(shared_library& lhs, shared_library& rhs) BOOST_NOEXCEPT {
+inline void swap(shared_library& lhs, shared_library& rhs) noexcept {
     lhs.swap(rhs);
 }
 
