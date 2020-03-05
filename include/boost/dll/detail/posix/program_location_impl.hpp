@@ -5,16 +5,11 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_POSIX_PROGRAM_LOCATION_IMPL_HPP
-#define BOOST_DLL_DETAIL_POSIX_PROGRAM_LOCATION_IMPL_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/dll/detail/system_error.hpp>
 #include <boost/predef/os.h>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <filesystem>
 #include <system_error>
@@ -133,6 +128,4 @@ namespace boost { namespace dll { namespace detail {
 }}} // namespace boost::dll::detail
 
 #endif
-
-#endif // BOOST_DLL_DETAIL_POSIX_PROGRAM_LOCATION_IMPL_HPP
 

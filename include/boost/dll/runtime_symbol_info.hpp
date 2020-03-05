@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_RUNTIME_SYMBOL_INFO_HPP
-#define BOOST_DLL_RUNTIME_SYMBOL_INFO_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
@@ -18,10 +17,6 @@
 #else
 #   include <dlfcn.h>
 #   include <boost/dll/detail/posix/program_location_impl.hpp>
-#endif
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
 #endif
 
 #include <filesystem>
@@ -233,6 +228,4 @@ namespace detail {
     }
 
 }} // namespace boost::dll
-
-#endif // BOOST_DLL_RUNTIME_SYMBOL_INFO_HPP
 

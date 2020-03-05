@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_SHARED_LIBRARY_IMPL_HPP
-#define BOOST_DLL_SHARED_LIBRARY_IMPL_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/dll/shared_library_load_mode.hpp>
@@ -21,10 +20,6 @@
 
 #include <filesystem>
 #include <system_error>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 namespace boost { namespace dll { namespace detail {
 
@@ -194,5 +189,3 @@ private:
 };
 
 }}} // boost::dll::detail
-
-#endif // BOOST_DLL_SHARED_LIBRARY_IMPL_HPP

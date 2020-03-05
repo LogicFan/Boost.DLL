@@ -5,14 +5,9 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_POSIX_ELF_INFO_HPP
-#define BOOST_DLL_DETAIL_POSIX_ELF_INFO_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <cstring>
 #include <fstream>
@@ -276,5 +271,3 @@ typedef elf_info<boost::uint32_t> elf_info32;
 typedef elf_info<boost::uint64_t> elf_info64;
 
 }}} // namespace boost::dll::detail
-
-#endif // BOOST_DLL_DETAIL_POSIX_ELF_INFO_HPP

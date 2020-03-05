@@ -4,20 +4,13 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_IMPORT_MANGLED_HELPERS_HPP_
-#define BOOST_DLL_DETAIL_IMPORT_MANGLED_HELPERS_HPP_
-
+#pragma once
 
 #include <boost/type_traits/conditional.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_class.hpp>
 #include <boost/type_traits/is_function.hpp>
 #include <boost/type_traits/remove_cv.hpp>
-
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 namespace boost { namespace dll { namespace experimental { namespace detail {
 
@@ -287,4 +280,3 @@ struct mem_fn_tuple<mem_fn_def<Class, Return(Args...)>> {
 };
 
 }}}}
-#endif /* BOOST_DLL_DETAIL_IMPORT_MANGLED_HELPERS_HPP_ */

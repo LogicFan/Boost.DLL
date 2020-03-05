@@ -5,9 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-
-#ifndef BOOST_DLL_DLL_HPP
-#define BOOST_DLL_DLL_HPP
+#pragma once
 
 /// \file boost/dll.hpp
 /// \brief Includes all the non-experimental headers of the Boost.DLL library.
@@ -18,10 +16,3 @@
 #include <boost/dll/import.hpp>
 #include <boost/dll/library_info.hpp>
 #include <boost/dll/runtime_symbol_info.hpp>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
-
-#endif // BOOST_DLL_DLL_HPP
-

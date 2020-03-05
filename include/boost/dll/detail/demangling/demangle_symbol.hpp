@@ -5,8 +5,7 @@
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
-#ifndef BOOST_DLL_DEMANGLE_SYMBOL_HPP_
-#define BOOST_DLL_DEMANGLE_SYMBOL_HPP_
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <string>
@@ -105,5 +104,3 @@ using ::boost::dll::detail::demangle_symbol;
 }}
 
 #endif
-
-#endif /* BOOST_DEMANGLE_HPP_ */

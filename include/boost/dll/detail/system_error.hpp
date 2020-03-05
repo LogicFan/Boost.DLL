@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_SYSTEM_ERROR_HPP
-#define BOOST_DLL_SYSTEM_ERROR_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
@@ -14,10 +13,6 @@
 
 #if !BOOST_OS_WINDOWS
 #   include <dlfcn.h>
-#endif
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-#   pragma once
 #endif
 
 #include <filesystem>
@@ -53,6 +48,4 @@ namespace boost { namespace dll { namespace detail {
     }
 
 }}} // boost::dll::detail
-
-#endif // BOOST_DLL_SYSTEM_ERROR_HPP
 

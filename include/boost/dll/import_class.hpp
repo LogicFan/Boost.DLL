@@ -4,16 +4,11 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_IMPORT_CLASS_HPP_
-#define BOOST_DLL_IMPORT_CLASS_HPP_
+#pragma once
 
 #include <boost/dll/smart_library.hpp>
 #include <boost/dll/import_mangled.hpp>
 #include <memory>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <filesystem>
 #include <system_error>
@@ -553,7 +548,3 @@ import_class(smart_library & lib, const std::string & alias_name, std::size_t si
 }
 }
 }
-
-
-
-#endif /* BOOST_DLL_IMPORT_CLASS_HPP_ */

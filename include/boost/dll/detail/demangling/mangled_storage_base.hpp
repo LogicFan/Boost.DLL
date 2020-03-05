@@ -4,8 +4,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_MANGLE_STORAGE_BASE_HPP_
-#define BOOST_DLL_DETAIL_MANGLE_STORAGE_BASE_HPP_
+#pragma once
 
 #include <vector>
 #include <string>
@@ -120,4 +119,3 @@ public:
 
 }}}
 
-#endif /* BOOST_DLL_DETAIL_MANGLE_STORAGE_HPP_ */

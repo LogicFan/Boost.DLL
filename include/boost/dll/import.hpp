@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_IMPORT_HPP
-#define BOOST_DLL_IMPORT_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/core/addressof.hpp>
@@ -18,10 +17,6 @@
 
 #if defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) || defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #   include <boost/function.hpp>
-#endif
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
 #endif
 
 #include <filesystem>
@@ -275,6 +270,4 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, cons
 
 
 }} // boost::dll
-
-#endif // BOOST_DLL_IMPORT_HPP
 

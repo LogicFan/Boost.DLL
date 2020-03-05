@@ -5,14 +5,9 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_WINDOWS_PE_INFO_HPP
-#define BOOST_DLL_DETAIL_WINDOWS_PE_INFO_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <cstring>
 #include <fstream>
@@ -421,5 +416,3 @@ typedef pe_info<boost::dll::detail::DWORD_>      pe_info32;
 typedef pe_info<boost::dll::detail::ULONGLONG_>  pe_info64;
 
 }}} // namespace boost::dll::detail
-
-#endif // BOOST_DLL_DETAIL_WINDOWS_PE_INFO_HPP

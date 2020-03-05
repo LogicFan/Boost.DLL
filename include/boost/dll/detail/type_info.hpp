@@ -6,8 +6,7 @@
 
 // For more information, see http://www.boost.org
 
-#ifndef BOOST_DLL_DETAIL_TYPE_INFO_HPP_
-#define BOOST_DLL_DETAIL_TYPE_INFO_HPP_
+#pragma once
 
 #include <typeinfo>
 #include <cstring>
@@ -84,4 +83,3 @@ const std::type_info& load_type_info(Lib & lib, Storage & storage)
 
 
 }}}
-#endif /* BOOST_DLL_DETAIL_TYPE_INFO_HPP_ */

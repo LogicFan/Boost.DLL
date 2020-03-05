@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_LIBRARY_INFO_HPP
-#define BOOST_DLL_LIBRARY_INFO_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/assert.hpp>
@@ -21,10 +20,6 @@
 #include <boost/dll/detail/pe_info.hpp>
 #include <boost/dll/detail/elf_info.hpp>
 #include <boost/dll/detail/macho_info.hpp>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <filesystem>
 #include <system_error>
@@ -209,4 +204,3 @@ public:
 };
 
 }} // namespace boost::dll
-#endif // BOOST_DLL_LIBRARY_INFO_HPP

@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_SHARED_LIBRARY_HPP
-#define BOOST_DLL_SHARED_LIBRARY_HPP
+#pragma once
 
 /// \file boost/dll/shared_library.hpp
 /// \brief Contains the boost::dll::shared_library class, core class for all the
@@ -24,10 +23,6 @@
 #   include <boost/dll/detail/windows/shared_library_impl.hpp>
 #else
 #   include <boost/dll/detail/posix/shared_library_impl.hpp>
-#endif
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
 #endif
 
 #include <filesystem>
@@ -568,5 +563,3 @@ inline void swap(shared_library& lhs, shared_library& rhs) BOOST_NOEXCEPT {
 }
 
 }} // boost::dll
-
-#endif // BOOST_DLL_SHARED_LIBRARY_HPP

@@ -4,8 +4,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_DEMANGLING_MSVC_HPP_
-#define BOOST_DLL_DETAIL_DEMANGLING_MSVC_HPP_
+#pragma once
 
 #include <boost/dll/detail/demangling/mangled_storage_base.hpp>
 #include <iterator>
@@ -435,7 +434,3 @@ std::vector<std::string> mangled_storage_impl::get_related() const
 
 
 }}}
-
-
-
-#endif /* BOOST_DLL_DETAIL_DEMANGLING_MSVC_HPP_ */

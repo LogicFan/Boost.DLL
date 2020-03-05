@@ -5,17 +5,12 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_POSIX_PATH_FROM_HANDLE_HPP
-#define BOOST_DLL_DETAIL_POSIX_PATH_FROM_HANDLE_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/dll/detail/system_error.hpp>
 #include <boost/dll/detail/posix/program_location_impl.hpp>
 #include <boost/predef/os.h>
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <filesystem>
 #include <system_error>
@@ -164,7 +159,5 @@ namespace boost { namespace dll { namespace detail {
 }}} // namespace boost::dll::detail
 
 #endif // #if BOOST_OS_MACOS || BOOST_OS_IOS
-
-#endif // BOOST_DLL_DETAIL_POSIX_PATH_FROM_HANDLE_HPP
 
 

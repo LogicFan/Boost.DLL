@@ -5,13 +5,9 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_DETAIL_AGGRESSIVE_PTR_CAST_HPP
-#define BOOST_DLL_DETAIL_AGGRESSIVE_PTR_CAST_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
-#ifdef BOOST_HAS_PRAGMA_ONCE
-#   pragma once
-#endif
 
 #include <boost/core/addressof.hpp>
 #include <boost/core/enable_if.hpp>
@@ -131,6 +127,4 @@ BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::val
 }
 
 }}} // boost::dll::detail
-
-#endif // BOOST_DLL_DETAIL_AGGRESSIVE_PTR_CAST_HPP
 

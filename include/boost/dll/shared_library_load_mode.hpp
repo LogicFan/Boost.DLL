@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_SHARED_LIBRARY_MODE_HPP
-#define BOOST_DLL_SHARED_LIBRARY_MODE_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
@@ -16,10 +15,6 @@
 #   include <boost/winapi/dll.hpp>
 #else
 #   include <dlfcn.h>
-#endif
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
 #endif
 
 /// \file boost/dll/shared_library_load_mode.hpp
@@ -244,5 +239,3 @@ BOOST_CONSTEXPR inline type operator~(type left) BOOST_NOEXCEPT {
 }
 
 }}} // boost::dll::load_mode
-
-#endif // BOOST_DLL_SHARED_LIBRARY_MODE_HPP

@@ -5,8 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_ALIAS_HPP
-#define BOOST_DLL_ALIAS_HPP
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/static_assert.hpp>
@@ -16,10 +15,6 @@
 
 #if BOOST_COMP_GNUC // MSVC does not have <stdint.h> and defines it in some other header, MinGW requires that header.
 #include <stdint.h> // intptr_t
-#endif
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
 #endif
 
 /// \file boost/dll/alias.hpp
@@ -262,7 +257,3 @@ namespace boost { namespace dll {
 
 
 }} // namespace boost::dll
-
-
-#endif // BOOST_DLL_ALIAS_HPP
-

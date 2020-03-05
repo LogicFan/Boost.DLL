@@ -6,13 +6,9 @@
 
 // For more information, see http://www.boost.org
 
-#ifndef BOOST_DLL_DETAIL_CTOR_DTOR_HPP_
-#define BOOST_DLL_DETAIL_CTOR_DTOR_HPP_
+#pragma once
 
 #include <boost/dll/config.hpp>
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
 #include <boost/dll/detail/get_mem_fn_type.hpp>
@@ -189,5 +185,3 @@ destructor<Class> load_dtor(Lib & lib, const mangled_storage_impl::dtor_sym & dt
 #endif
 
 }}} // namespace boost::dll::detail
-
-#endif /* BOOST_DLL_DETAIL_CTOR_DTOR_HPP_ */

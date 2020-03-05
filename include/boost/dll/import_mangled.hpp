@@ -5,8 +5,7 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef BOOST_DLL_IMPORT_MANGLED_HPP_
-#define BOOST_DLL_IMPORT_MANGLED_HPP_
+#pragma once
 
 #include <boost/dll/config.hpp>
 #include <boost/make_shared.hpp>
@@ -17,12 +16,6 @@
 #include <boost/core/enable_if.hpp>
 #include <boost/type_traits/conditional.hpp>
 #include <boost/type_traits/is_object.hpp>
-
-
-
-#ifdef BOOST_HAS_PRAGMA_ONCE
-# pragma once
-#endif
 
 #include <filesystem>
 #include <system_error>
@@ -307,6 +300,3 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library)
 #undef BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE
 
 }}}
-
-
-#endif /* BOOST_DLL_IMPORT_MANGLED_HPP_ */
