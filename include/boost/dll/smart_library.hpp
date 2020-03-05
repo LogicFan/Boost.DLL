@@ -21,7 +21,6 @@
 #include <boost/dll/detail/get_mem_fn_type.hpp>
 #include <boost/dll/detail/ctor_dtor.hpp>
 #include <boost/dll/detail/type_info.hpp>
-#include <boost/type_traits/is_void.hpp>
 #include <boost/type_traits/is_function.hpp>
 
 #include <filesystem>

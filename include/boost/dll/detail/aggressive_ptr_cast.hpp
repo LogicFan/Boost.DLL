@@ -14,7 +14,6 @@
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/type_traits/is_member_pointer.hpp>
-#include <boost/type_traits/is_void.hpp>
 #include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -38,8 +37,8 @@ BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::val
     );
 
     BOOST_STATIC_ASSERT_MSG(
-        boost::is_void< typename boost::remove_pointer<To>::type >::value
-        || boost::is_void< typename boost::remove_pointer<From>::type >::value,
+        std::is_void< typename boost::remove_pointer<To>::type >::value
+        || std::is_void< typename boost::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
@@ -66,7 +65,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_reference<To>::value |
     );
 
     BOOST_STATIC_ASSERT_MSG(
-        boost::is_void< typename boost::remove_pointer<From>::type >::value,
+        std::is_void< typename boost::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
@@ -95,7 +94,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_member_pointer<To>::va
     );
 
     BOOST_STATIC_ASSERT_MSG(
-        boost::is_void< typename boost::remove_pointer<From>::type >::value,
+        std::is_void< typename boost::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
@@ -114,7 +113,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::val
     );
 
     BOOST_STATIC_ASSERT_MSG(
-        boost::is_void< typename boost::remove_pointer<To>::type >::value,
+        std::is_void< typename boost::remove_pointer<To>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
