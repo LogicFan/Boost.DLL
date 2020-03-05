@@ -50,14 +50,14 @@ namespace boost { namespace dll {
 #else // #if BOOST_COMP_MSVC
 
 
-#if BOOST_OS_WINDOWS || BOOST_OS_ANDROID || BOOST_COMP_IBM
+#if defined(_WIN32) || BOOST_OS_ANDROID || BOOST_COMP_IBM
 // There are some problems with mixing `__dllexport__` and `weak` using MinGW
 // See https://sourceware.org/bugzilla/show_bug.cgi?id=17480
 //
 // Android had an issue with exporting weak symbols
 // https://code.google.com/p/android/issues/detail?id=70206
 #define BOOST_DLL_SELECTANY
-#else // #if BOOST_OS_WINDOWS
+#else // #if defined(_WIN32)
 /*!
 * \brief Macro that allows linker to select any occurrence of this symbol instead of
 * failing with 'multiple definitions' error at linktime.
@@ -67,7 +67,7 @@ namespace boost { namespace dll {
 * (See https://code.google.com/p/android/issues/detail?id=70206, https://sourceware.org/bugzilla/show_bug.cgi?id=17480)
 */
 #define BOOST_DLL_SELECTANY __attribute__((weak))
-#endif // #if BOOST_OS_WINDOWS
+#endif // #if defined(_WIN32)
 
 // TODO: improve section permissions using following info:
 // http://stackoverflow.com/questions/6252812/what-does-the-aw-flag-in-the-section-attribute-mean
@@ -163,7 +163,7 @@ namespace boost { namespace dll {
     /**/
 
 
-#if ((BOOST_COMP_GNUC && BOOST_OS_WINDOWS) || BOOST_OS_ANDROID || BOOST_COMP_IBM || defined(BOOST_DLL_FORCE_NO_WEAK_EXPORTS)) \
+#if ((BOOST_COMP_GNUC && defined(_WIN32)) || BOOST_OS_ANDROID || BOOST_COMP_IBM || defined(BOOST_DLL_FORCE_NO_WEAK_EXPORTS)) \
     && !defined(BOOST_DLL_FORCE_ALIAS_INSTANTIATION) && !defined(BOOST_DLL_DOXYGEN)
 
 #define BOOST_DLL_ALIAS_SECTIONED(FunctionOrVar, AliasName, SectionName)                        \

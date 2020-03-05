@@ -11,7 +11,7 @@
 #include <boost/predef/os.h>
 #include <boost/throw_exception.hpp>
 
-#if !BOOST_OS_WINDOWS
+#if !defined(_WIN32)
 #   include <dlfcn.h>
 #endif
 
@@ -21,14 +21,14 @@
 namespace boost { namespace dll { namespace detail {
 
     inline void reset_dlerror() noexcept {
-#if !BOOST_OS_WINDOWS
+#if !defined(_WIN32)
         const char* const error_txt = dlerror();
         (void)error_txt;
 #endif
     }
 
     inline void report_error(const std::error_code& ec, const char* message) {
-#if !BOOST_OS_WINDOWS
+#if !defined(_WIN32)
         const char* const error_txt = dlerror();
         if (error_txt) {
             boost::throw_exception(

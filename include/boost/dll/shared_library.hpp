@@ -16,7 +16,7 @@
 #include <boost/dll/detail/system_error.hpp>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
 
-#if BOOST_OS_WINDOWS
+#if defined(_WIN32)
 #   include <boost/dll/detail/windows/shared_library_impl.hpp>
 #else
 #   include <boost/dll/detail/posix/shared_library_impl.hpp>

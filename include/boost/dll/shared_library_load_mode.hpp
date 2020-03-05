@@ -11,7 +11,7 @@
 #include <boost/predef/os.h>
 #include <boost/predef/library/c.h>
 
-#if BOOST_OS_WINDOWS
+#if defined(_WIN32)
 #   include <boost/winapi/dll.hpp>
 #else
 #   include <dlfcn.h>
@@ -167,7 +167,7 @@ enum type {
     * Allow loading from system folders if path to library contains no parent path.
     */
     search_system_folders
-#elif BOOST_OS_WINDOWS
+#elif defined(_WIN32)
     default_mode                          = 0,
     dont_resolve_dll_references           = boost::winapi::DONT_RESOLVE_DLL_REFERENCES_,
     load_ignore_code_authz_level          = boost::winapi::LOAD_IGNORE_CODE_AUTHZ_LEVEL_,

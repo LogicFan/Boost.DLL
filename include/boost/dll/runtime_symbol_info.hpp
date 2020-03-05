@@ -11,7 +11,7 @@
 #include <boost/predef/os.h>
 #include <boost/predef/compiler/visualc.h>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
-#if BOOST_OS_WINDOWS
+#if defined(_WIN32)
 #   include <boost/winapi/dll.hpp>
 #   include <boost/dll/detail/windows/path_from_handle.hpp>
 #else
@@ -26,7 +26,7 @@
 /// \brief Provides methods for getting acceptable by boost::dll::shared_library location of symbol, source line or program.
 namespace boost { namespace dll {
 
-#if BOOST_OS_WINDOWS
+#if defined(_WIN32)
 namespace detail {
     inline std::filesystem::path program_location_impl(std::error_code& ec) {
         return boost::dll::detail::path_from_handle(NULL, ec);
@@ -65,7 +65,7 @@ namespace detail {
 
         const void* ptr = boost::dll::detail::aggressive_ptr_cast<const void*>(ptr_to_symbol);
 
-#if BOOST_OS_WINDOWS
+#if defined(_WIN32)
         boost::winapi::MEMORY_BASIC_INFORMATION_ mbi;
         if (!boost::winapi::VirtualQuery(ptr, &mbi, sizeof(mbi))) {
             ec = boost::dll::detail::last_error_code();

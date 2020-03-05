@@ -60,13 +60,13 @@ private:
     }
 
     static void throw_if_in_windows() {
-#if BOOST_OS_WINDOWS
+#if defined(_WIN32)
         boost::throw_exception(std::runtime_error("Not native format: not a PE binary"));
 #endif
     }
 
     static void throw_if_in_linux() {
-#if !BOOST_OS_WINDOWS && !BOOST_OS_MACOS && !BOOST_OS_IOS
+#if !defined(_WIN32) && !BOOST_OS_MACOS && !BOOST_OS_IOS
         boost::throw_exception(std::runtime_error("Not native format: not an ELF binary"));
 #endif
     }
