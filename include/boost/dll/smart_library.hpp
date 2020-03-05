@@ -123,7 +123,7 @@ public:
     *
     * \throw Nothing.
     */
-    smart_library(BOOST_RV_REF(smart_library) lib) noexcept
+    smart_library(smart_library &&lib) noexcept
         : _lib(std::move(lib._lib)), _storage(std::move(lib._storage))
     {}
 
@@ -146,7 +146,7 @@ public:
      *
      * \throw Nothing.
      */
-     explicit smart_library(BOOST_RV_REF(shared_library) lib) noexcept
+     explicit smart_library(shared_library &&lib) noexcept
          : _lib(std::move(static_cast<shared_library&>(lib)))
      {
          _storage.load(lib.location());
@@ -413,26 +413,6 @@ inline bool operator<(const smart_library& lhs, const smart_library& rhs) noexce
 inline void swap(smart_library& lhs, smart_library& rhs) noexcept {
     lhs.swap(rhs);
 }
-
-
-#ifdef BOOST_DLL_DOXYGEN
-/** Helper functions for overloads.
- *
- * Gets either a variable, function or member-function, depending on the signature.
- *
- * @code
- * smart_library sm("lib.so");
- * get<int>(sm, "space::value"); //import a variable
- * get<void(int)>(sm, "space::func"); //import a function
- * get<some_class, void(int)>(sm, "space::class_::mem_fn"); //import a member function
- * @endcode
- *
- * @param sm A reference to the @ref smart_library
- * @param name The name of the entity to import
- */
-template<class T, class T2>
-void get(const smart_library& sm, const std::string &name);
-#endif
 
 template<class T>
 T& get(const smart_library& sm, const std::string &name, typename boost::enable_if<std::is_object<T>,T>::type* = nullptr)
