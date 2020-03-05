@@ -215,7 +215,7 @@ public:
      * im_class.call<const type_alias, void(const char*)>("function_name")("MyString");
      * \endcode
      */
-    template<class Tin, class Signature, class = boost::enable_if<detail::unqalified_is_same<T, Tin>>>
+    template<class Tin, class Signature, class = std::enable_if<detail::unqalified_is_same<T, Tin>::value>>
     const detail::mem_fn_call_proxy<Tin, Signature> call(const std::string& name)
     {
         return detail::mem_fn_call_proxy<Tin, Signature>(_data.get(), name, _lib);

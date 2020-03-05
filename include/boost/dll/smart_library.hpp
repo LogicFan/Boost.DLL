@@ -418,14 +418,14 @@ inline void swap(smart_library& lhs, smart_library& rhs) noexcept {
 }
 
 template<class T>
-T& get(const smart_library& sm, const std::string &name, typename boost::enable_if<std::is_object<T>,T>::type* = nullptr)
+T& get(const smart_library& sm, const std::string &name, typename std::enable_if<std::is_object_v<T>, T>::type* = nullptr)
 
 {
     return sm.get_variable<T>(name);
 }
 
 template<class T>
-auto get(const smart_library& sm, const std::string &name, typename boost::enable_if<std::is_function<T>>::type* = nullptr)
+auto get(const smart_library& sm, const std::string &name, typename std::enable_if<std::is_function_v<T>>::type* = nullptr)
 {
     return sm.get_function<T>(name);
 }

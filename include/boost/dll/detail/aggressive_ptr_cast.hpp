@@ -10,7 +10,6 @@
 #include <boost/dll/config.hpp>
 
 #include <boost/core/addressof.hpp>
-#include <boost/core/enable_if.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/type_traits/is_member_pointer.hpp>
@@ -28,7 +27,7 @@ namespace boost { namespace dll { namespace detail {
 // GCC warns when reinterpret_cast between function pointer and object pointer occur.
 // This method suppress the warnings and ensures that such casts are safe.
 template <class To, class From>
-BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::value || boost::is_reference<To>::value || boost::is_member_pointer<From>::value, To>::type
+BOOST_FORCEINLINE typename std::enable_if<!(boost::is_member_pointer<To>::value || boost::is_reference<To>::value || boost::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
     BOOST_STATIC_ASSERT_MSG(
@@ -56,7 +55,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::val
 #endif
 
 template <class To, class From>
-BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_reference<To>::value || boost::is_member_pointer<From>::value, To>::type
+BOOST_FORCEINLINE typename std::enable_if<!(!boost::is_reference<To>::value || boost::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
     BOOST_STATIC_ASSERT_MSG(
@@ -85,7 +84,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_reference<To>::value |
 #endif
 
 template <class To, class From>
-BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_member_pointer<To>::value || boost::is_member_pointer<From>::value, To>::type
+BOOST_FORCEINLINE typename std::enable_if<!(!boost::is_member_pointer<To>::value || boost::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
     BOOST_STATIC_ASSERT_MSG(
@@ -104,7 +103,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_member_pointer<To>::va
 }
 
 template <class To, class From>
-BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::value || !boost::is_member_pointer<From>::value, To>::type
+BOOST_FORCEINLINE typename std::enable_if<!(boost::is_member_pointer<To>::value || !boost::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From /* v */) noexcept
 {
     BOOST_STATIC_ASSERT_MSG(

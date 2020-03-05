@@ -11,7 +11,6 @@
 #include <boost/dll/smart_library.hpp>
 #include <boost/dll/detail/import_mangled_helpers.hpp>
 #include <boost/core/addressof.hpp>
-#include <boost/core/enable_if.hpp>
 #include <boost/type_traits/conditional.hpp>
 
 #include <filesystem>

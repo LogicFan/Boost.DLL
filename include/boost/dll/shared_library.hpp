@@ -13,7 +13,6 @@
 
 #include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
-#include <boost/core/enable_if.hpp>
 #include <boost/type_traits/is_member_pointer.hpp>
 #include <boost/dll/detail/system_error.hpp>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
@@ -349,19 +348,19 @@ public:
     * \throw \forcedlinkfs{system_error} if symbol does not exist or if the DLL/DSO was not loaded.
     */
     template <typename T>
-    inline typename boost::enable_if_c<boost::is_member_pointer<T>::value || boost::is_reference<T>::value, T>::type  get(const std::string& symbol_name) const {
+    inline typename std::enable_if<boost::is_member_pointer<T>::value || boost::is_reference<T>::value, T>::type  get(const std::string& symbol_name) const {
         return get<T>(symbol_name.c_str());
     }
 
     //! \overload T& get(const std::string& symbol_name) const
     template <typename T>
-    inline typename boost::disable_if_c<boost::is_member_pointer<T>::value || boost::is_reference<T>::value, T&>::type get(const std::string& symbol_name) const {
+    inline typename std::enable_if<!(boost::is_member_pointer<T>::value || boost::is_reference<T>::value), T&>::type get(const std::string& symbol_name) const {
         return get<T>(symbol_name.c_str());
     }
 
     //! \overload T& get(const std::string& symbol_name) const
     template <typename T>
-    inline typename boost::enable_if_c<boost::is_member_pointer<T>::value || boost::is_reference<T>::value, T>::type get(const char* symbol_name) const {
+    inline typename std::enable_if<boost::is_member_pointer<T>::value || boost::is_reference<T>::value, T>::type get(const char* symbol_name) const {
         return boost::dll::detail::aggressive_ptr_cast<T>(
             get_void(symbol_name)
         );
@@ -369,7 +368,7 @@ public:
 
     //! \overload T& get(const std::string& symbol_name) const
     template <typename T>
-    inline typename boost::disable_if_c<boost::is_member_pointer<T>::value || boost::is_reference<T>::value, T&>::type get(const char* symbol_name) const {
+    inline typename std::enable_if<!(boost::is_member_pointer<T>::value || boost::is_reference<T>::value), T&>::type get(const char* symbol_name) const {
         return *boost::dll::detail::aggressive_ptr_cast<T*>(
             get_void(symbol_name)
         );
