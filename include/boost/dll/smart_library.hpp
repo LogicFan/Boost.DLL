@@ -4,8 +4,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_DLL_SMART_LIBRARY_HPP_
-#define BOOST_DLL_SMART_LIBRARY_HPP_
+#pragma once
 
 /// \file boost/dll/smart_library.hpp
 /// \warning Extremely experimental! Requires C++14! Will change in next version of Boost! boost/dll/smart_library.hpp is not included in boost/dll.hpp
@@ -35,6 +34,8 @@ namespace experimental {
 
 using boost::dll::detail::constructor;
 using boost::dll::detail::destructor;
+using boost::dll::detail::mangled_storage_impl;
+using boost::dll::detail::get_mem_fn_type;
 
 /*!
 * \brief This class is an extension of \ref shared_library, which allows to load C++ symbols.
@@ -69,7 +70,7 @@ using boost::dll::detail::destructor;
 */
 class smart_library {
     shared_library _lib;
-    detail::mangled_storage_impl _storage;
+    mangled_storage_impl _storage;
 
 public:
     /*!
@@ -77,7 +78,7 @@ public:
      */
     const shared_library &shared_lib() const {return _lib;}
 
-    using mangled_storage = detail::mangled_storage_impl;
+    using mangled_storage = mangled_storage_impl;
     /*!
     * Access to the mangled storage, which is created on construction.
     *
@@ -448,7 +449,7 @@ auto get(const smart_library& sm, const std::string &name, typename boost::enabl
 }
 
 template<class Class, class Signature>
-auto get(const smart_library& sm, const std::string &name) -> typename detail::get_mem_fn_type<Class, Signature>::mem_fn
+auto get(const smart_library& sm, const std::string &name) -> typename get_mem_fn_type<Class, Signature>::mem_fn
 {
     return sm.get_mem_fn<Class, Signature>(name);
 }
@@ -457,5 +458,3 @@ auto get(const smart_library& sm, const std::string &name) -> typename detail::g
 } /* namespace experimental */
 } /* namespace dll */
 } /* namespace boost */
-
-#endif /* BOOST_DLL_SMART_LIBRARY_HPP_ */
