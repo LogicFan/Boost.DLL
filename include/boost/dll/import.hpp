@@ -10,7 +10,6 @@
 #include <boost/dll/config.hpp>
 #include <boost/core/addressof.hpp>
 #include <boost/core/enable_if.hpp>
-#include <boost/type_traits/is_object.hpp>
 #include <boost/dll/shared_library.hpp>
 #include <boost/move/move.hpp>
 
@@ -22,6 +21,7 @@
 #include <system_error>
 #include <memory>
 #include <functional>
+#include <type_traits>
 
 /// \file boost/dll/import.hpp
 /// \brief Contains all the boost::dll::import* reference counting
@@ -70,7 +70,7 @@ namespace detail {
     struct import_type;
 
     template <class T>
-    struct import_type<T, typename boost::disable_if<boost::is_object<T> >::type> {
+    struct import_type<T, typename boost::disable_if<std::is_object<T> >::type> {
         typedef boost::dll::detail::library_function<T> base_type;
 
 #if defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) || defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
@@ -81,7 +81,7 @@ namespace detail {
     };
 
     template <class T>
-    struct import_type<T, typename boost::enable_if<boost::is_object<T> >::type> {
+    struct import_type<T, typename boost::enable_if<std::is_object<T> >::type> {
         typedef std::shared_ptr<T> base_type;
         typedef std::shared_ptr<T> type;
     };

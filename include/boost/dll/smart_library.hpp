@@ -21,12 +21,12 @@
 #include <boost/dll/detail/get_mem_fn_type.hpp>
 #include <boost/dll/detail/ctor_dtor.hpp>
 #include <boost/dll/detail/type_info.hpp>
-#include <boost/type_traits/is_object.hpp>
 #include <boost/type_traits/is_void.hpp>
 #include <boost/type_traits/is_function.hpp>
 
 #include <filesystem>
 #include <system_error>
+#include <type_traits>
 
 namespace boost {
 namespace dll {
@@ -436,7 +436,7 @@ void get(const smart_library& sm, const std::string &name);
 #endif
 
 template<class T>
-T& get(const smart_library& sm, const std::string &name, typename boost::enable_if<boost::is_object<T>,T>::type* = nullptr)
+T& get(const smart_library& sm, const std::string &name, typename boost::enable_if<std::is_object<T>,T>::type* = nullptr)
 
 {
     return sm.get_variable<T>(name);

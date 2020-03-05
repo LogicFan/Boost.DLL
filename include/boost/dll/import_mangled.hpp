@@ -14,11 +14,11 @@
 #include <boost/core/addressof.hpp>
 #include <boost/core/enable_if.hpp>
 #include <boost/type_traits/conditional.hpp>
-#include <boost/type_traits/is_object.hpp>
 
 #include <filesystem>
 #include <system_error>
 #include <memory>
+#include <type_traits>
 
 namespace boost { namespace dll { namespace experimental {
 
@@ -85,7 +85,7 @@ public:
 
 // simple enough to be here
 template<class Seq>  struct is_variable : boost::false_type {};
-template<typename T> struct is_variable<sequence<T>> : boost::is_object<T> {};
+template<typename T> struct is_variable<sequence<T>> : std::is_object<T> {};
 
 template <class Sequence,
           bool isFunction = is_function_seq<Sequence>::value,

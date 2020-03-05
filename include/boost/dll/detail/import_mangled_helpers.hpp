@@ -12,6 +12,8 @@
 #include <boost/type_traits/is_function.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace dll { namespace experimental { namespace detail {
 
 //the following could be done by fusion, though it's simple enough to just declare it here.
@@ -144,7 +146,7 @@ struct make_mem_fn_seq<T0, T1, T2, Args...>
      * Class, const Class, void(int)//--> ovl class.
      *
      */
-    static_assert(boost::is_object<T0>::value, "");
+    static_assert(std::is_object<T0>::value, "");
     typedef typename make_mem_fn_seq_getter<
            unqalified_is_same<T0, T1>::value, T0, T1, T2>::type mem_fn_type;
 
@@ -206,7 +208,7 @@ template<class T, class U>
 struct is_mem_fn_seq_impl<T, U>
 {
     typedef typename boost::conditional<
-                 boost::is_function<U>::value && boost::is_object<T>::value,
+                 boost::is_function<U>::value && std::is_object<T>::value,
                  boost::true_type, boost::false_type>::type type;
 };
 
@@ -224,7 +226,7 @@ template<class T> struct is_mem_fn_seq : boost::false_type {};
 //If only two arguments are provided at all.
 template<class T, class U>
 struct is_mem_fn_seq<sequence<T, U>> : boost::conditional<
-                 boost::is_object<T>::value && boost::is_function<U>::value,
+                 std::is_object<T>::value && boost::is_function<U>::value,
                  boost::true_type, boost::false_type>::type
 {
 };
