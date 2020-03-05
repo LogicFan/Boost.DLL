@@ -26,6 +26,9 @@
 # pragma once
 #endif
 
+#include <filesystem>
+#include <system_error>
+
 /// \file boost/dll/library_info.hpp
 /// \brief Contains only the boost::dll::library_info class that is capable of
 /// extracting different information from binaries.
@@ -117,7 +120,7 @@ public:
     * \param throw_if_not_native_format Throw an exception if this file format is not
     * supported by OS.
     */
-    explicit library_info(const boost::dll::fs::path& library_path, bool throw_if_not_native_format = true)
+    explicit library_info(const std::filesystem::path& library_path, bool throw_if_not_native_format = true)
         : f_(
         #ifdef BOOST_DLL_USE_STD_FS
             library_path,

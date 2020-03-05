@@ -20,6 +20,9 @@
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 
+#include <filesystem>
+#include <system_error>
+
 namespace boost { namespace dll { namespace detail {
 
 // reference:
@@ -366,14 +369,14 @@ public:
       MSVCR110D.dll
     */
     /*
-    static std::vector<std::string> depend_of(boost::dll::fs::error_code &ec) BOOST_NOEXCEPT {
+    static std::vector<std::string> depend_of(std::error_code &ec) BOOST_NOEXCEPT {
         std::vector<std::string> ret;
 
         IMAGE_DOS_HEADER* image_dos_header = (IMAGE_DOS_HEADER*)native();
         if(!image_dos_header) {
             // ERROR_BAD_EXE_FORMAT 
-            ec = boost::dll::fs::make_error_code(
-                 boost::dll::fs::errc::executable_format_error
+            ec = std::make_error_code(
+                 std::errc::executable_format_error
                  );
 
             return ret;
@@ -382,8 +385,8 @@ public:
         IMAGE_OPTIONAL_HEADER* image_optional_header = (IMAGE_OPTIONAL_HEADER*)((boost::dll::detail::BYTE_*)native() + image_dos_header->e_lfanew + 24);
         if(!image_optional_header) {
             // ERROR_BAD_EXE_FORMAT 
-            ec = boost::dll::fs::make_error_code(
-                 boost::dll::fs::errc::executable_format_error
+            ec = std::make_error_code(
+                 std::errc::executable_format_error
                  );
 
             return ret;
@@ -392,8 +395,8 @@ public:
         IMAGE_IMPORT_DESCRIPTOR* image_import_descriptor =  (IMAGE_IMPORT_DESCRIPTOR*)((boost::dll::detail::BYTE_*)native() + image_optional_header->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
         if(!image_import_descriptor) {
             // ERROR_BAD_EXE_FORMAT 
-            ec = boost::dll::fs::make_error_code(
-                 boost::dll::fs::errc::executable_format_error
+            ec = std::make_error_code(
+                 std::errc::executable_format_error
                  );
 
             return ret;

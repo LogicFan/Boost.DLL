@@ -17,6 +17,9 @@
 # pragma once
 #endif
 
+#include <filesystem>
+#include <system_error>
+
 #if BOOST_OS_MACOS || BOOST_OS_IOS
 
 #   include <mach-o/dyld.h>
@@ -30,7 +33,7 @@ namespace boost { namespace dll { namespace detail {
         );
     }
 
-    inline boost::dll::fs::path path_from_handle(void* handle, boost::dll::fs::error_code &ec) {
+    inline std::filesystem::path path_from_handle(void* handle, std::error_code &ec) {
         handle = strip_handle(handle);
 
         // Iterate through all images currently in memory
@@ -53,11 +56,11 @@ namespace boost { namespace dll { namespace detail {
         }
 
         boost::dll::detail::reset_dlerror();
-        ec = boost::dll::fs::make_error_code(
-            boost::dll::fs::errc::bad_file_descriptor
+        ec = std::make_error_code(
+            std::errc::bad_file_descriptor
         );
 
-        return boost::dll::fs::path();
+        return std::filesystem::path();
     }
 
 }}} // namespace boost::dll::detail
@@ -78,12 +81,12 @@ namespace boost { namespace dll { namespace detail {
         // ...          // Ignoring remaning parts of the structure
     };
 
-    inline boost::dll::fs::path path_from_handle(const void* handle, boost::dll::fs::error_code &ec) {
+    inline std::filesystem::path path_from_handle(const void* handle, std::error_code &ec) {
         static const std::size_t work_around_b_24465209__offset = 128;
         const struct soinfo* si = reinterpret_cast<const struct soinfo*>(
             static_cast<const char*>(handle) + work_around_b_24465209__offset
         );
-        boost::dll::fs::path ret = boost::dll::symbol_location_ptr(si->base, ec);
+        std::filesystem::path ret = boost::dll::symbol_location_ptr(si->base, ec);
 
         if (ec) {
             ec.clear();
@@ -119,7 +122,7 @@ namespace boost { namespace dll { namespace detail {
     };
 #endif // #if BOOST_OS_QNX
 
-    inline boost::dll::fs::path path_from_handle(void* handle, boost::dll::fs::error_code &ec) {
+    inline std::filesystem::path path_from_handle(void* handle, std::error_code &ec) {
         // RTLD_DI_LINKMAP (RTLD_DI_ORIGIN returns only folder and is not suitable for this case)
         // Obtain the Link_map for the handle  that  is  specified.
         // The  p  argument  points to a Link_map pointer (Link_map
@@ -144,18 +147,18 @@ namespace boost { namespace dll { namespace detail {
 #endif
         if (!link_map) {
             boost::dll::detail::reset_dlerror();
-            ec = boost::dll::fs::make_error_code(
-                boost::dll::fs::errc::bad_file_descriptor
+            ec = std::make_error_code(
+                std::errc::bad_file_descriptor
             );
 
-            return boost::dll::fs::path();
+            return std::filesystem::path();
         }
 
         if (!link_map->l_name || *link_map->l_name == '\0') {
             return program_location_impl(ec);
         }
 
-        return boost::dll::fs::path(link_map->l_name);
+        return std::filesystem::path(link_map->l_name);
     }
 
 }}} // namespace boost::dll::detail

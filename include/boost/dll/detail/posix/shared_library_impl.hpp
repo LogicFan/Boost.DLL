@@ -30,6 +30,9 @@
 # pragma once
 #endif
 
+#include <filesystem>
+#include <system_error>
+
 namespace boost { namespace dll { namespace detail {
 
 class shared_library_impl {
@@ -59,17 +62,17 @@ public:
     }
 
 
-    static boost::dll::fs::path decorate(const boost::dll::fs::path & sl) {
-        boost::dll::fs::path actual_path = (
+    static std::filesystem::path decorate(const std::filesystem::path & sl) {
+        std::filesystem::path actual_path = (
             std::strncmp(sl.filename().string().c_str(), "lib", 3)
-            ? boost::dll::fs::path((sl.has_parent_path() ? sl.parent_path() / L"lib" : L"lib").native() + sl.filename().native())
+            ? std::filesystem::path((sl.has_parent_path() ? sl.parent_path() / L"lib" : L"lib").native() + sl.filename().native())
             : sl
         );
         actual_path += suffix();
         return actual_path;
     }
 
-    void load(boost::dll::fs::path sl, load_mode::type portable_mode, boost::dll::fs::error_code &ec) {
+    void load(std::filesystem::path sl, load_mode::type portable_mode, std::error_code &ec) {
         typedef int native_mode_t;
         native_mode_t native_mode = static_cast<native_mode_t>(portable_mode);
         unload();
@@ -77,8 +80,8 @@ public:
         // Do not allow opening NULL paths. User must use program_location() instead
         if (sl.empty()) {
             boost::dll::detail::reset_dlerror();
-            ec = boost::dll::fs::make_error_code(
-                boost::dll::fs::errc::bad_file_descriptor
+            ec = std::make_error_code(
+                std::errc::bad_file_descriptor
             );
 
             return;
@@ -99,8 +102,8 @@ public:
         }
 #else
         if (!sl.is_absolute() && !(native_mode & load_mode::search_system_folders)) {
-            boost::dll::fs::error_code current_path_ec;
-            boost::dll::fs::path prog_loc = boost::dll::fs::current_path(current_path_ec);
+            std::error_code current_path_ec;
+            std::filesystem::path prog_loc = std::filesystem::current_path(current_path_ec);
             if (!current_path_ec) {
                 prog_loc /= sl;
                 sl.swap(prog_loc);
@@ -114,18 +117,18 @@ public:
         if (!!(native_mode & load_mode::append_decorations)) {
             native_mode = static_cast<unsigned>(native_mode) & ~static_cast<unsigned>(load_mode::append_decorations);
 
-            boost::dll::fs::path actual_path = decorate(sl);
+            std::filesystem::path actual_path = decorate(sl);
             handle_ = dlopen(actual_path.c_str(), native_mode);
             if (handle_) {
                 boost::dll::detail::reset_dlerror();
                 return;
             }
-            boost::dll::fs::error_code prog_loc_err;
-            boost::dll::fs::path loc = boost::dll::detail::program_location_impl(prog_loc_err);
-            if (boost::dll::fs::exists(actual_path) && !boost::dll::fs::equivalent(sl, loc, prog_loc_err)) {
+            std::error_code prog_loc_err;
+            std::filesystem::path loc = boost::dll::detail::program_location_impl(prog_loc_err);
+            if (std::filesystem::exists(actual_path) && !std::filesystem::equivalent(sl, loc, prog_loc_err)) {
                 // decorated path exists : current error is not a bad file descriptor and we are not trying to load the executable itself
-                ec = boost::dll::fs::make_error_code(
-                    boost::dll::fs::errc::executable_format_error
+                ec = std::make_error_code(
+                    std::errc::executable_format_error
                 );
                 return;
             }
@@ -138,16 +141,16 @@ public:
             return;
         }
 
-        ec = boost::dll::fs::make_error_code(
-            boost::dll::fs::errc::bad_file_descriptor
+        ec = std::make_error_code(
+            std::errc::bad_file_descriptor
         );
 
         // Maybe user wanted to load the executable itself? Checking...
         // We assume that usually user wants to load a dynamic library not the executable itself, that's why
         // we try this only after traditional load fails.
-        boost::dll::fs::error_code prog_loc_err;
-        boost::dll::fs::path loc = boost::dll::detail::program_location_impl(prog_loc_err);
-        if (!prog_loc_err && boost::dll::fs::equivalent(sl, loc, prog_loc_err) && !prog_loc_err) {
+        std::error_code prog_loc_err;
+        std::filesystem::path loc = boost::dll::detail::program_location_impl(prog_loc_err);
+        if (!prog_loc_err && std::filesystem::equivalent(sl, loc, prog_loc_err) && !prog_loc_err) {
             // As is known the function dlopen() loads the dynamic library file
             // named by the null-terminated string filename and returns an opaque
             // "handle" for the dynamic library. If filename is NULL, then the
@@ -156,8 +159,8 @@ public:
             boost::dll::detail::reset_dlerror();
             handle_ = dlopen(NULL, native_mode);
             if (!handle_) {
-                ec = boost::dll::fs::make_error_code(
-                    boost::dll::fs::errc::bad_file_descriptor
+                ec = std::make_error_code(
+                    std::errc::bad_file_descriptor
                 );
             }
         }
@@ -180,11 +183,11 @@ public:
         boost::swap(handle_, rhs.handle_);
     }
 
-    boost::dll::fs::path full_module_path(boost::dll::fs::error_code &ec) const {
+    std::filesystem::path full_module_path(std::error_code &ec) const {
         return boost::dll::detail::path_from_handle(handle_, ec);
     }
 
-    static boost::dll::fs::path suffix() {
+    static std::filesystem::path suffix() {
         // https://sourceforge.net/p/predef/wiki/OperatingSystems/
 #if BOOST_OS_MACOS || BOOST_OS_IOS
         return ".dylib";
@@ -193,12 +196,12 @@ public:
 #endif
     }
 
-    void* symbol_addr(const char* sb, boost::dll::fs::error_code &ec) const BOOST_NOEXCEPT {
+    void* symbol_addr(const char* sb, std::error_code &ec) const BOOST_NOEXCEPT {
         // dlsym - obtain the address of a symbol from a dlopen object
         void* const symbol = dlsym(handle_, sb);
         if (symbol == NULL) {
-            ec = boost::dll::fs::make_error_code(
-                boost::dll::fs::errc::invalid_seek
+            ec = std::make_error_code(
+                std::errc::invalid_seek
             );
         }
 

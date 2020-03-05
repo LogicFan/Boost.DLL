@@ -24,6 +24,9 @@
 # pragma once
 #endif
 
+#include <filesystem>
+#include <system_error>
+
 /// \file boost/dll/import.hpp
 /// \brief Contains all the boost::dll::import* reference counting
 /// functions that hold a shared pointer to the instance of
@@ -129,7 +132,7 @@ namespace detail {
 *       Overload that accepts path also throws std::bad_alloc in case of insufficient memory.
 */
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import(const boost::dll::fs::path& lib, const char* name,
+BOOST_DLL_IMPORT_RESULT_TYPE import(const std::filesystem::path& lib, const char* name,
     load_mode::type mode = load_mode::default_mode)
 {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
@@ -138,15 +141,15 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(const boost::dll::fs::path& lib, const char*
     return type(p, boost::addressof(p->get<T>(name)));
 }
 
-//! \overload boost::dll::import(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import(const boost::dll::fs::path& lib, const std::string& name,
+BOOST_DLL_IMPORT_RESULT_TYPE import(const std::filesystem::path& lib, const std::string& name,
     load_mode::type mode = load_mode::default_mode)
 {
     return import<T>(lib, name.c_str(), mode);
 }
 
-//! \overload boost::dll::import(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import(const shared_library& lib, const char* name) {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
@@ -155,13 +158,13 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(const shared_library& lib, const char* name)
     return type(p, boost::addressof(p->get<T>(name)));
 }
 
-//! \overload boost::dll::import(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import(const shared_library& lib, const std::string& name) {
     return import<T>(lib, name.c_str());
 }
 
-//! \overload boost::dll::import(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char* name) {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
@@ -172,7 +175,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char
     return type(p, boost::addressof(p->get<T>(name)));
 }
 
-//! \overload boost::dll::import(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const std::string& name) {
     return import<T>(boost::move(lib), name.c_str());
@@ -219,7 +222,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const std:
 *       Overload that accepts path also throws std::bad_alloc in case of insufficient memory.
 */
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const boost::dll::fs::path& lib, const char* name,
+BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const std::filesystem::path& lib, const char* name,
     load_mode::type mode = load_mode::default_mode)
 {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
@@ -228,15 +231,15 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const boost::dll::fs::path& lib, const
     return type(p, p->get<T*>(name));
 }
 
-//! \overload boost::dll::import_alias(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const boost::dll::fs::path& lib, const std::string& name,
+BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const std::filesystem::path& lib, const std::string& name,
     load_mode::type mode = load_mode::default_mode)
 {
     return import_alias<T>(lib, name.c_str(), mode);
 }
 
-//! \overload boost::dll::import_alias(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const shared_library& lib, const char* name) {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
@@ -245,13 +248,13 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const shared_library& lib, const char*
     return type(p, p->get<T*>(name));
 }
 
-//! \overload boost::dll::import_alias(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const shared_library& lib, const std::string& name) {
     return import_alias<T>(lib, name.c_str());
 }
 
-//! \overload boost::dll::import_alias(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, const char* name) {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
@@ -262,7 +265,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, cons
     return type(p, p->get<T*>(name));
 }
 
-//! \overload boost::dll::import_alias(const boost::dll::fs::path& lib, const char* name, load_mode::type mode)
+//! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
 BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, const std::string& name) {
     return import_alias<T>(boost::move(lib), name.c_str());

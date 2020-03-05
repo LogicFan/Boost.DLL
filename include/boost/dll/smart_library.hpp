@@ -26,7 +26,8 @@
 #include <boost/type_traits/is_void.hpp>
 #include <boost/type_traits/is_function.hpp>
 
-
+#include <filesystem>
+#include <system_error>
 
 namespace boost {
 namespace dll {
@@ -90,19 +91,19 @@ public:
     //! \copydoc shared_library::shared_library()
     smart_library() BOOST_NOEXCEPT {};
 
-    //! \copydoc shared_library::shared_library(const boost::dll::fs::path& lib_path, load_mode::type mode = load_mode::default_mode)
-    smart_library(const boost::dll::fs::path& lib_path, load_mode::type mode = load_mode::default_mode) {
+    //! \copydoc shared_library::shared_library(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode)
+    smart_library(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode) {
         _lib.load(lib_path, mode);
         _storage.load(lib_path);
     }
 
-    //! \copydoc shared_library::shared_library(const boost::dll::fs::path& lib_path, boost::dll::fs::error_code& ec, load_mode::type mode = load_mode::default_mode)
-    smart_library(const boost::dll::fs::path& lib_path, boost::dll::fs::error_code& ec, load_mode::type mode = load_mode::default_mode) {
+    //! \copydoc shared_library::shared_library(const std::filesystem::path& lib_path, std::error_code& ec, load_mode::type mode = load_mode::default_mode)
+    smart_library(const std::filesystem::path& lib_path, std::error_code& ec, load_mode::type mode = load_mode::default_mode) {
         load(lib_path, mode, ec);
     }
 
-    //! \copydoc shared_library::shared_library(const boost::dll::fs::path& lib_path, load_mode::type mode, boost::dll::fs::error_code& ec)
-    smart_library(const boost::dll::fs::path& lib_path, load_mode::type mode, boost::dll::fs::error_code& ec) {
+    //! \copydoc shared_library::shared_library(const std::filesystem::path& lib_path, load_mode::type mode, std::error_code& ec)
+    smart_library(const std::filesystem::path& lib_path, load_mode::type mode, std::error_code& ec) {
         load(lib_path, mode, ec);
     }
     /*!
@@ -161,9 +162,9 @@ public:
     */
     ~smart_library() BOOST_NOEXCEPT {};
 
-    //! \copydoc shared_library::load(const boost::dll::fs::path& lib_path, load_mode::type mode = load_mode::default_mode)
-    void load(const boost::dll::fs::path& lib_path, load_mode::type mode = load_mode::default_mode) {
-        boost::dll::fs::error_code ec;
+    //! \copydoc shared_library::load(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode)
+    void load(const std::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode) {
+        std::error_code ec;
         _storage.load(lib_path);
         _lib.load(lib_path, mode, ec);
 
@@ -172,15 +173,15 @@ public:
         }
     }
 
-    //! \copydoc shared_library::load(const boost::dll::fs::path& lib_path, boost::dll::fs::error_code& ec, load_mode::type mode = load_mode::default_mode)
-    void load(const boost::dll::fs::path& lib_path, boost::dll::fs::error_code& ec, load_mode::type mode = load_mode::default_mode) {
+    //! \copydoc shared_library::load(const std::filesystem::path& lib_path, std::error_code& ec, load_mode::type mode = load_mode::default_mode)
+    void load(const std::filesystem::path& lib_path, std::error_code& ec, load_mode::type mode = load_mode::default_mode) {
         ec.clear();
         _storage.load(lib_path);
         _lib.load(lib_path, mode, ec);
     }
 
-    //! \copydoc shared_library::load(const boost::dll::fs::path& lib_path, load_mode::type mode, boost::dll::fs::error_code& ec)
-    void load(const boost::dll::fs::path& lib_path, load_mode::type mode, boost::dll::fs::error_code& ec) {
+    //! \copydoc shared_library::load(const std::filesystem::path& lib_path, load_mode::type mode, std::error_code& ec)
+    void load(const std::filesystem::path& lib_path, load_mode::type mode, std::error_code& ec) {
         ec.clear();
         _storage.load(lib_path);
         _lib.load(lib_path, mode, ec);

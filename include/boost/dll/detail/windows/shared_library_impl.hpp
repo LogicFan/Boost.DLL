@@ -19,6 +19,9 @@
 
 #include <boost/winapi/dll.hpp>
 
+#include <filesystem>
+#include <system_error>
+
 #ifdef BOOST_HAS_PRAGMA_ONCE
 # pragma once
 #endif
@@ -50,20 +53,20 @@ public:
         return *this;
     }
 
-    static boost::dll::fs::path decorate(const boost::dll::fs::path& sl) {
-        boost::dll::fs::path actual_path = sl;
+    static std::filesystem::path decorate(const std::filesystem::path& sl) {
+        std::filesystem::path actual_path = sl;
         actual_path += suffix();
         return actual_path;
     }
 
-    void load(boost::dll::fs::path sl, load_mode::type portable_mode, boost::dll::fs::error_code &ec) {
+    void load(std::filesystem::path sl, load_mode::type portable_mode, std::error_code &ec) {
         typedef boost::winapi::DWORD_ native_mode_t;
         native_mode_t native_mode = static_cast<native_mode_t>(portable_mode);
         unload();
 
         if (!sl.is_absolute() && !(native_mode & load_mode::search_system_folders)) {
-            boost::dll::fs::error_code current_path_ec;
-            boost::dll::fs::path prog_loc = boost::dll::fs::current_path(current_path_ec);
+            std::error_code current_path_ec;
+            std::filesystem::path prog_loc = std::filesystem::current_path(current_path_ec);
 
             if (!current_path_ec) {
                 prog_loc /= sl;
@@ -81,7 +84,7 @@ public:
             }
 
             // MinGW loves 'lib' prefix and puts it even on Windows platform.
-            const boost::dll::fs::path mingw_load_path = (
+            const std::filesystem::path mingw_load_path = (
                 sl.has_parent_path()
                 ? sl.parent_path() / L"lib"
                 : L"lib"
@@ -126,21 +129,21 @@ public:
         boost::swap(handle_, rhs.handle_);
     }
 
-    boost::dll::fs::path full_module_path(boost::dll::fs::error_code &ec) const {
+    std::filesystem::path full_module_path(std::error_code &ec) const {
         return boost::dll::detail::path_from_handle(handle_, ec);
     }
 
-    static boost::dll::fs::path suffix() {
+    static std::filesystem::path suffix() {
         return L".dll";
     }
 
-    void* symbol_addr(const char* sb, boost::dll::fs::error_code &ec) const BOOST_NOEXCEPT {
+    void* symbol_addr(const char* sb, std::error_code &ec) const BOOST_NOEXCEPT {
         if (is_resource()) {
             // `GetProcAddress` could not be called for libraries loaded with
             // `LOAD_LIBRARY_AS_DATAFILE`, `LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE`
             // or `LOAD_LIBRARY_AS_IMAGE_RESOURCE`.
-            ec = boost::dll::fs::make_error_code(
-                boost::dll::fs::errc::operation_not_supported
+            ec = std::make_error_code(
+                std::errc::operation_not_supported
             );
 
             return NULL;
@@ -165,14 +168,14 @@ public:
 
 private:
     // Returns true if this load attempt should be the last one.
-    bool load_impl(const boost::dll::fs::path &load_path, boost::winapi::DWORD_ mode, boost::dll::fs::error_code &ec) {
+    bool load_impl(const std::filesystem::path &load_path, boost::winapi::DWORD_ mode, std::error_code &ec) {
         handle_ = boost::winapi::LoadLibraryExW(load_path.c_str(), 0, mode);
         if (handle_) {
             return true;
         }
 
         ec = boost::dll::detail::last_error_code();
-        if (boost::dll::fs::exists(load_path)) {
+        if (std::filesystem::exists(load_path)) {
             // decorated path exists : current error is not a bad file descriptor
             return true;
         }
