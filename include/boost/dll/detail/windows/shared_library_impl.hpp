@@ -105,7 +105,7 @@ public:
         // LoadLibraryExW method is capable of self loading from program_location() path. No special actions
         // must be taken to allow self loading.
         if (!handle_) {
-            ec = boost::dll::detail::last_error_code();
+            ec = dll::detail::last_error_code();
         }
     }
 
@@ -125,7 +125,7 @@ public:
     }
 
     std::filesystem::path full_module_path(std::error_code &ec) const {
-        return boost::dll::detail::path_from_handle(handle_, ec);
+        return dll::detail::path_from_handle(handle_, ec);
     }
 
     static std::filesystem::path suffix() {
@@ -147,11 +147,11 @@ public:
         // Judging by the documentation of GetProcAddress
         // there is no version for UNICODE on desktop/server Windows, because
         // names of functions are stored in narrow characters.
-        void* const symbol = boost::dll::detail::aggressive_ptr_cast<void*>(
+        void* const symbol = dll::detail::aggressive_ptr_cast<void*>(
             boost::winapi::get_proc_address(handle_, sb)
         );
         if (symbol == NULL) {
-            ec = boost::dll::detail::last_error_code();
+            ec = dll::detail::last_error_code();
         }
 
         return symbol;
@@ -169,7 +169,7 @@ private:
             return true;
         }
 
-        ec = boost::dll::detail::last_error_code();
+        ec = dll::detail::last_error_code();
         if (std::filesystem::exists(load_path)) {
             // decorated path exists : current error is not a bad file descriptor
             return true;
@@ -188,4 +188,4 @@ private:
     native_handle_t handle_;
 };
 
-}}} // boost::dll::detail
+}}} // dll::detail

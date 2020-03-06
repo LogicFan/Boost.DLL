@@ -47,5 +47,5 @@ namespace boost { namespace dll { namespace detail {
         );
     }
 
-}}} // boost::dll::detail
+}}} // dll::detail
 

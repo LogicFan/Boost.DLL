@@ -16,7 +16,7 @@
 #endif
 
 /// \file boost/dll/shared_library_load_mode.hpp
-/// \brief Contains only the boost::dll::load_mode::type enum and operators related to it.
+/// \brief Contains only the dll::load_mode::type enum and operators related to it.
 
 namespace boost { namespace dll { namespace load_mode {
 
@@ -102,4 +102,4 @@ constexpr inline type operator~(type left) noexcept {
     );
 }
 
-}}} // boost::dll::load_mode
+}}} // dll::load_mode

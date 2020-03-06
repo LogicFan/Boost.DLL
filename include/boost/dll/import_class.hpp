@@ -46,9 +46,9 @@ template<class T, class = void>
 struct mem_fn_call_proxy;
 
 template<class Class, class U>
-struct mem_fn_call_proxy<Class, boost::dll::experimental::detail::mangled_library_mem_fn<Class, U>>
+struct mem_fn_call_proxy<Class, dll::experimental::detail::mangled_library_mem_fn<Class, U>>
 {
-    typedef boost::dll::experimental::detail::mangled_library_mem_fn<Class, U> mem_fn_t;
+    typedef dll::experimental::detail::mangled_library_mem_fn<Class, U> mem_fn_t;
     Class* t;
     mem_fn_t & mem_fn;
 
@@ -102,7 +102,7 @@ import_class(const smart_library& lib, std::size_t size,
 
 /*! This class represents an imported class.
  *
- * \note It must be constructed via \ref boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+ * \note It must be constructed via \ref dll::import_class(const smart_library& lib, std::size_t, Args...)
  *
  * \tparam The type or type-alias of the imported class.
  */
@@ -222,18 +222,18 @@ public:
     }
     ///Overload of ->* for an imported method.
     template<class Tin, class T2>
-    const detail::mem_fn_call_proxy<Tin, boost::dll::experimental::detail::mangled_library_mem_fn<Tin, T2>>
+    const detail::mem_fn_call_proxy<Tin, dll::experimental::detail::mangled_library_mem_fn<Tin, T2>>
             operator->*(detail::mangled_library_mem_fn<Tin, T2>& mn)
     {
-        return detail::mem_fn_call_proxy<Tin, boost::dll::experimental::detail::mangled_library_mem_fn<Tin, T2>>(_data.get(), mn);
+        return detail::mem_fn_call_proxy<Tin, dll::experimental::detail::mangled_library_mem_fn<Tin, T2>>(_data.get(), mn);
     }
 
     ///Import a method of the class.
     template <class ...Args>
-    typename boost::dll::experimental::detail::mangled_import_type<boost::dll::experimental::detail::sequence<T, Args...>>::type
+    typename dll::experimental::detail::mangled_import_type<dll::experimental::detail::sequence<T, Args...>>::type
     import(const std::string & name)
     {
-        return boost::dll::experimental::import_mangled<T, Args...>(_lib, name);
+        return dll::experimental::import_mangled<T, Args...>(_lib, name);
     }
 };
 
@@ -258,7 +258,7 @@ inline std::unique_ptr<T, detail::deleter<T>> imported_class<T>::make_data(const
         // report_error() calls dlsym, do not use it here!
         boost::throw_exception(
             std::system_error(
-                ec, "boost::dll::detail::make_data() failed: no allocating ctor or dtor was found"
+                ec, "dll::detail::make_data() failed: no allocating ctor or dtor was found"
             )
         );
     }
@@ -287,7 +287,7 @@ inline std::unique_ptr<T, detail::deleter<T>> imported_class<T>::make_data(const
         // report_error() calls dlsym, do not use it here!
         boost::throw_exception(
             std::system_error(
-                ec, "boost::dll::detail::make_data() failed: no regular ctor or dtor was found"
+                ec, "dll::detail::make_data() failed: no regular ctor or dtor was found"
             )
         );
     }
@@ -352,7 +352,7 @@ imported_class<T>::imported_class(detail::sequence<Args...> *, smart_library && 
 }
 
 template<typename T>
-inline imported_class<T> boost::dll::experimental::imported_class<T>::copy() const
+inline imported_class<T> dll::experimental::imported_class<T>::copy() const
 {
     if (this->_is_allocating)
         return imported_class<T>::template make<const T&>(_lib, *_data);
@@ -361,7 +361,7 @@ inline imported_class<T> boost::dll::experimental::imported_class<T>::copy() con
 }
 
 template<typename T>
-inline imported_class<T> boost::dll::experimental::imported_class<T>::move()
+inline imported_class<T> dll::experimental::imported_class<T>::move()
 {
     if (this->_is_allocating)
         return imported_class<T>::template make<T&&>(_lib, *_data);
@@ -370,13 +370,13 @@ inline imported_class<T> boost::dll::experimental::imported_class<T>::move()
 }
 
 template<typename T>
-inline void boost::dll::experimental::imported_class<T>::copy_assign(const imported_class<T>& lhs) const
+inline void dll::experimental::imported_class<T>::copy_assign(const imported_class<T>& lhs) const
 {
     this->call<T&(const T&)>("operator=")(*lhs._data);
 }
 
 template<typename T>
-inline void boost::dll::experimental::imported_class<T>::move_assign(imported_class<T>& lhs)
+inline void dll::experimental::imported_class<T>::move_assign(imported_class<T>& lhs)
 {
     this->call<T&(T&&)>("operator=")(static_cast<T&&>(*lhs._data));
 }
@@ -420,7 +420,7 @@ import_class(const smart_library& lib_, std::size_t size, Args...args)
     return imported_class<T>::template make<Args...>(std::move(lib), size, static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(const smart_library& lib_, Args...args)
 {
@@ -428,7 +428,7 @@ import_class(const smart_library& lib_, Args...args)
     return imported_class<T>::template make<Args...>(std::move(lib), static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(const smart_library& lib_, const std::string & alias_name, Args...args)
 {
@@ -437,7 +437,7 @@ import_class(const smart_library& lib_, const std::string & alias_name, Args...a
     return imported_class<T>::template make<Args...>(std::move(lib), static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(const smart_library& lib_, std::size_t size, const std::string & alias_name, Args...args)
 {
@@ -447,7 +447,7 @@ import_class(const smart_library& lib_, std::size_t size, const std::string & al
     return imported_class<T>::template make<Args...>(std::move(lib), size, static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(const smart_library& lib_, const std::string & alias_name, std::size_t size, Args...args)
 {
@@ -457,14 +457,14 @@ import_class(const smart_library& lib_, const std::string & alias_name, std::siz
     return imported_class<T>::template make<Args...>(std::move(lib), size, static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library && lib, Args...args)
 {
     return imported_class<T>::template make<Args...>(std::move(lib), static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library && lib, const std::string & alias_name, Args...args)
 {
@@ -472,14 +472,14 @@ import_class(smart_library && lib, const std::string & alias_name, Args...args)
     return imported_class<T>::template make<Args...>(std::move(lib), static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library && lib, std::size_t size, Args...args)
 {
     return imported_class<T>::template make<Args...>(std::move(lib), size, static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library && lib, std::size_t size, const std::string & alias_name, Args...args)
 {
@@ -487,7 +487,7 @@ import_class(smart_library && lib, std::size_t size, const std::string & alias_n
     return imported_class<T>::template make<Args...>(std::move(lib), size, static_cast<Args>(args)...);
 }
 
-//! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
+//! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library && lib, const std::string & alias_name, std::size_t size, Args...args)
 {
@@ -497,8 +497,8 @@ import_class(smart_library && lib, const std::string & alias_name, std::size_t s
 
 
 
-/*! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
- * \note This function does add the type alias to the \ref boost::dll::experimental::smart_library.
+/*! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
+ * \note This function does add the type alias to the \ref dll::experimental::smart_library.
  */
 
 template<typename T, typename ... Args> imported_class<T>
@@ -507,8 +507,8 @@ import_class(smart_library & lib, Args...args)
     return imported_class<T>::template make<Args...>(lib, static_cast<Args>(args)...);
 }
 
-/*! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
- * \note This function does add the type alias to the \ref boost::dll::experimental::smart_library.
+/*! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
+ * \note This function does add the type alias to the \ref dll::experimental::smart_library.
  */
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library & lib, const std::string & alias_name, Args...args)
@@ -517,8 +517,8 @@ import_class(smart_library & lib, const std::string & alias_name, Args...args)
     return imported_class<T>::template make<Args...>(lib, static_cast<Args>(args)...);
 }
 
-/*! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
- * \note This function does add the type alias to the \ref boost::dll::experimental::smart_library.
+/*! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
+ * \note This function does add the type alias to the \ref dll::experimental::smart_library.
  */
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library & lib, std::size_t size, Args...args)
@@ -526,8 +526,8 @@ import_class(smart_library & lib, std::size_t size, Args...args)
     return imported_class<T>::template make<Args...>(lib, size, static_cast<Args>(args)...);
 }
 
-/*! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
- * \note This function does add the type alias to the \ref boost::dll::experimental::smart_library.
+/*! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
+ * \note This function does add the type alias to the \ref dll::experimental::smart_library.
  */
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library & lib, std::size_t size, const std::string & alias_name, Args...args)
@@ -536,8 +536,8 @@ import_class(smart_library & lib, std::size_t size, const std::string & alias_na
     return imported_class<T>::template make<Args...>(lib, size, static_cast<Args>(args)...);
 }
 
-/*! \overload boost::dll::import_class(const smart_library& lib, std::size_t, Args...)
- * \note This function does add the type alias to the \ref boost::dll::experimental::smart_library.
+/*! \overload dll::import_class(const smart_library& lib, std::size_t, Args...)
+ * \note This function does add the type alias to the \ref dll::experimental::smart_library.
  */
 template<typename T, typename ... Args> imported_class<T>
 import_class(smart_library & lib, const std::string & alias_name, std::size_t size, Args...args)

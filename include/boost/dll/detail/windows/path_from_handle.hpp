@@ -36,7 +36,7 @@ namespace boost { namespace dll { namespace detail {
         // executable file of the current process.
         boost::winapi::WCHAR_ path_hldr[DEFAULT_PATH_SIZE_];
         boost::winapi::GetModuleFileNameW(handle, path_hldr, DEFAULT_PATH_SIZE_);
-        ec = boost::dll::detail::last_error_code();
+        ec = dll::detail::last_error_code();
         if (!ec) {
             return std::filesystem::path(path_hldr);
         }
@@ -44,7 +44,7 @@ namespace boost { namespace dll { namespace detail {
         for (unsigned i = 2; i < 1025 && static_cast<boost::winapi::DWORD_>(ec.value()) == ERROR_INSUFFICIENT_BUFFER_; i *= 2) {
             std::wstring p(DEFAULT_PATH_SIZE_ * i, L'\0');
             const std::size_t size = boost::winapi::GetModuleFileNameW(handle, &p[0], DEFAULT_PATH_SIZE_ * i);
-            ec = boost::dll::detail::last_error_code();
+            ec = dll::detail::last_error_code();
 
             if (!ec) {
                 p.resize(size);
@@ -56,4 +56,4 @@ namespace boost { namespace dll { namespace detail {
         return std::filesystem::path();
     }
 
-}}} // namespace boost::dll::detail
+}}} // namespace dll::detail

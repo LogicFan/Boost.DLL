@@ -33,4 +33,4 @@ struct get_mem_fn_type<const volatile Class, Return(Args...)> {
     typedef Return (Class::*mem_fn)(Args...) const volatile ;
 };
 
-}}} // namespace boost::dll::detail
+}}} // namespace dll::detail

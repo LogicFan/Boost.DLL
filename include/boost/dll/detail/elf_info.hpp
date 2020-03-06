@@ -87,9 +87,9 @@ typedef Elf_Sym_template<boost::uint64_t> Elf64_Sym_;
 
 template <class AddressOffsetT>
 class elf_info {
-    typedef boost::dll::detail::Elf_Ehdr_template<AddressOffsetT>  header_t;
-    typedef boost::dll::detail::Elf_Shdr_template<AddressOffsetT>  section_t;
-    typedef boost::dll::detail::Elf_Sym_template<AddressOffsetT>   symbol_t;
+    typedef dll::detail::Elf_Ehdr_template<AddressOffsetT>  header_t;
+    typedef dll::detail::Elf_Shdr_template<AddressOffsetT>  section_t;
+    typedef dll::detail::Elf_Sym_template<AddressOffsetT>   symbol_t;
 
     BOOST_STATIC_CONSTANT(boost::uint32_t, SHT_SYMTAB_ = 2);
     BOOST_STATIC_CONSTANT(boost::uint32_t, SHT_STRTAB_ = 3);
@@ -270,4 +270,4 @@ public:
 typedef elf_info<boost::uint32_t> elf_info32;
 typedef elf_info<boost::uint64_t> elf_info64;
 
-}}} // namespace boost::dll::detail
+}}} // namespace dll::detail

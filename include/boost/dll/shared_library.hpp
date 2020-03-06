@@ -8,7 +8,7 @@
 #pragma once
 
 /// \file boost/dll/shared_library.hpp
-/// \brief Contains the boost::dll::shared_library class, core class for all the
+/// \brief Contains the dll::shared_library class, core class for all the
 /// DLL/DSO operations.
 
 #include "config.hpp"
@@ -41,10 +41,10 @@ namespace boost { namespace dll {
 */
 class shared_library
 /// @cond
-    : private boost::dll::detail::shared_library_impl
+    : private dll::detail::shared_library_impl
 /// @endcond
 {
-    typedef boost::dll::detail::shared_library_impl base_t;
+    typedef dll::detail::shared_library_impl base_t;
 
 public:
     typedef shared_library_impl::native_handle_t native_handle_t;
@@ -138,7 +138,7 @@ public:
         std::error_code ec;
         assign(lib, ec);
         if (ec) {
-            boost::dll::detail::report_error(ec, "boost::dll::shared_library::operator= failed");
+            dll::detail::report_error(ec, "dll::shared_library::operator= failed");
         }
 
         return *this;
@@ -213,7 +213,7 @@ public:
         std::error_code ec;
         assign(lib, ec);
         if (ec) {
-            boost::dll::detail::report_error(ec, "boost::dll::shared_library::assign() failed");
+            dll::detail::report_error(ec, "dll::shared_library::assign() failed");
         }
 
         return *this;
@@ -237,7 +237,7 @@ public:
         base_t::load(lib_path, mode, ec);
 
         if (ec) {
-            boost::dll::detail::report_error(ec, "boost::dll::shared_library::load() failed");
+            dll::detail::report_error(ec, "dll::shared_library::load() failed");
         }
     }
 
@@ -354,7 +354,7 @@ public:
     //! \overload T& get(const std::string& symbol_name) const
     template <typename T>
     inline typename std::enable_if<std::is_member_pointer<T>::value || std::is_reference<T>::value, T>::type get(const char* symbol_name) const {
-        return boost::dll::detail::aggressive_ptr_cast<T>(
+        return dll::detail::aggressive_ptr_cast<T>(
             get_void(symbol_name)
         );
     }
@@ -362,7 +362,7 @@ public:
     //! \overload T& get(const std::string& symbol_name) const
     template <typename T>
     inline typename std::enable_if<!(std::is_member_pointer<T>::value || std::is_reference<T>::value), T&>::type get(const char* symbol_name) const {
-        return *boost::dll::detail::aggressive_ptr_cast<T*>(
+        return *dll::detail::aggressive_ptr_cast<T*>(
             get_void(symbol_name)
         );
     }
@@ -404,13 +404,13 @@ private:
 
             // report_error() calls dlsym, do not use it here!
             throw std::system_error(
-                    ec, "boost::dll::shared_library::get() failed: no library was loaded"
+                    ec, "dll::shared_library::get() failed: no library was loaded"
                 );
         }
 
         void* const ret = base_t::symbol_addr(sb, ec);
         if (ec || !ret) {
-            boost::dll::detail::report_error(ec, "boost::dll::shared_library::get() failed");
+            dll::detail::report_error(ec, "dll::shared_library::get() failed");
         }
 
         return ret;
@@ -448,14 +448,14 @@ public:
             );
 
             throw std::system_error(
-                    ec, "boost::dll::shared_library::location() failed (no library was loaded)"
+                    ec, "dll::shared_library::location() failed (no library was loaded)"
                 );
         }
 
         std::filesystem::path full_path = base_t::full_module_path(ec);
 
         if (ec) {
-            boost::dll::detail::report_error(ec, "boost::dll::shared_library::location() failed");
+            dll::detail::report_error(ec, "dll::shared_library::location() failed");
         }
 
         return full_path;
