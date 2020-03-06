@@ -8,15 +8,13 @@
 #pragma once
 
 #include <boost/dll/config.hpp>
-
-#include <cstring>
-#include <fstream>
-
-#include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 
 #include <filesystem>
 #include <system_error>
+#include <cstring>
+#include <fstream>
+#include <assert.h>
 
 namespace boost { namespace dll { namespace detail {
 
@@ -212,7 +210,7 @@ private:
         const std::size_t exp_virtual_address = h.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT_].VirtualAddress;
 
         const std::size_t real_offset = get_file_offset(fs, exp_virtual_address, h);
-        BOOST_ASSERT(real_offset);
+        assert(real_offset);
 
         fs.seekg(real_offset);
         read_raw(fs, exports);

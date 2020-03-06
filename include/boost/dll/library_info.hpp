@@ -151,7 +151,7 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::sections(f_);
         case fmt_macho_info64: return boost::dll::detail::macho_info64::sections(f_);
         };
-        BOOST_ASSERT(false);
+        assert(false);
         BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
     }
 
@@ -167,7 +167,7 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_);
         case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_);
         };
-        BOOST_ASSERT(false);
+        assert(false);
         BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
     }
 
@@ -184,7 +184,7 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_, section_name);
         case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_, section_name);
         };
-        BOOST_ASSERT(false);
+        assert(false);
         BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
     }
 
@@ -199,7 +199,7 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_, section_name.c_str());
         case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_, section_name.c_str());
         };
-        BOOST_ASSERT(false);
+        assert(false);
         BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
     }
 };
