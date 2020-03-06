@@ -10,17 +10,17 @@
 /// \warning Extremely experimental! Requires C++14! Will change in next version of Boost! boost/dll/smart_library.hpp is not included in boost/dll.hpp
 /// \brief Contains the boost::dll::experimental::smart_library class for loading mangled symbols.
 
-#include <boost/dll/config.hpp>
+#include "config.hpp"
 #if defined(_MSC_VER) // MSVC, Clang-cl, and ICC on Windows
-#   include <boost/dll/detail/demangling/msvc.hpp>
+#   include "detail/demangling/msvc.hpp"
 #else
-#   include <boost/dll/detail/demangling/itanium.hpp>
+#   include "detail/demangling/itanium.hpp"
 #endif
 
-#include <boost/dll/shared_library.hpp>
-#include <boost/dll/detail/get_mem_fn_type.hpp>
-#include <boost/dll/detail/ctor_dtor.hpp>
-#include <boost/dll/detail/type_info.hpp>
+#include "shared_library.hpp"
+#include "detail/get_mem_fn_type.hpp"
+#include "detail/ctor_dtor.hpp"
+#include "detail/type_info.hpp"
 
 #include <filesystem>
 #include <system_error>

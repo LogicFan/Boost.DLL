@@ -11,15 +11,14 @@
 /// \brief Contains the boost::dll::shared_library class, core class for all the
 /// DLL/DSO operations.
 
-#include <boost/dll/config.hpp>
-#include <boost/predef/os.h>
-#include <boost/dll/detail/system_error.hpp>
-#include <boost/dll/detail/aggressive_ptr_cast.hpp>
+#include "config.hpp"
+#include "detail/system_error.hpp"
+#include "detail/aggressive_ptr_cast.hpp"
 
 #if defined(_WIN32)
-#   include <boost/dll/detail/windows/shared_library_impl.hpp>
+#   include "detail/windows/shared_library_impl.hpp"
 #else
-#   include <boost/dll/detail/posix/shared_library_impl.hpp>
+#   include "detail/posix/shared_library_impl.hpp"
 #endif
 
 #include <filesystem>

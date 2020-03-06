@@ -10,9 +10,9 @@
 /// \file boost/dll.hpp
 /// \brief Includes all the non-experimental headers of the Boost.DLL library.
 
-#include <boost/dll/config.hpp>
-#include <boost/dll/shared_library.hpp>
-#include <boost/dll/alias.hpp>
-#include <boost/dll/import.hpp>
-#include <boost/dll/library_info.hpp>
-#include <boost/dll/runtime_symbol_info.hpp>
+#include "dll/config.hpp"
+#include "dll/shared_library.hpp"
+#include "dll/alias.hpp"
+#include "dll/import.hpp"
+#include "dll/library_info.hpp"
+#include "dll/runtime_symbol_info.hpp"
