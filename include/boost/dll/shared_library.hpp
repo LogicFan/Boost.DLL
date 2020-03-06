@@ -11,8 +11,9 @@
 /// \brief Contains the boost::dll::shared_library class, core class for all the
 /// DLL/DSO operations.
 
-#include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
+
+#include <boost/dll/config.hpp>
 #include <boost/dll/detail/system_error.hpp>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
 

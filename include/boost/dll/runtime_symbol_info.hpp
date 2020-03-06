@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
 #include <boost/predef/compiler/visualc.h>
+
+#include <boost/dll/config.hpp>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
 #if BOOST_OS_WINDOWS
 #   include <boost/winapi/dll.hpp>

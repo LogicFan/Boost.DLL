@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
 #include <boost/predef/library/c.h>
+
+#include <boost/dll/config.hpp>
 
 #if BOOST_OS_WINDOWS
 #   include <boost/winapi/dll.hpp>
