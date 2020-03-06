@@ -6,11 +6,6 @@
 
 #pragma once
 
-#include <boost/type_traits/conditional.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/type_traits/is_class.hpp>
-#include <boost/type_traits/remove_cv.hpp>
-
 #include <type_traits>
 
 namespace boost { namespace dll { namespace experimental { namespace detail {
@@ -28,9 +23,9 @@ struct push_front<Value, sequence<Args...>>
 
 template<class Lhs, class Rhs>
 struct unqalified_is_same :
-        boost::is_same<
-            typename boost::remove_cv<Lhs>::type,
-            typename boost::remove_cv<Rhs>::type
+        std::is_same<
+            typename std::remove_cv<Lhs>::type,
+            typename std::remove_cv<Rhs>::type
         >
 {
 };
@@ -234,7 +229,7 @@ struct is_mem_fn_seq<sequence<T, U>> : std::conditional<
 template<class T, class Func, class ...Args>
 struct is_mem_fn_seq<sequence<T, Func, Args...>> :
         std::conditional<
-            boost::is_class<T>::value && std::is_function<Func>::value,
+            std::is_class<T>::value && std::is_function<Func>::value,
             typename is_mem_fn_seq_impl<T, Args...>::type,
             boost::false_type>::type {};
 
