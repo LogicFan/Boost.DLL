@@ -13,11 +13,11 @@
 
 //[plugcpp_my_plugin_aggregator
 #include <boost/dll/alias.hpp> // for BOOST_DLL_ALIAS   
-#include "../tutorial_common/my_plugin_api.hpp"
+#include "../tutorial_common/plugin.hpp"
 
 namespace my_namespace {
 
-class my_plugin_aggregator : public my_plugin_api {
+class my_plugin_aggregator : public plugin_base {
     float aggr_;
     my_plugin_aggregator() : aggr_(0) {}
 
