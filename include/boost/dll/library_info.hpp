@@ -15,6 +15,7 @@
 #include <fstream>
 #include <filesystem>
 #include <system_error>
+#include <assert.h>
 
 /// \file boost/dll/library_info.hpp
 /// \brief Contains only the boost::dll::library_info class that is capable of
