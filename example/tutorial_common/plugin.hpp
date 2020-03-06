@@ -7,16 +7,17 @@
 #ifndef BOOST_DLL_MY_PLUGIN_API_HPP
 #define BOOST_DLL_MY_PLUGIN_API_HPP
 
+#define visible __attribute__((__visibility__("default")))
+
 //[plugapi
-#include <boost/config.hpp>
 #include <string>
 
-class BOOST_SYMBOL_VISIBLE my_plugin_api {
+class visible plugin_base {
 public:
    virtual std::string name() const = 0;
    virtual float calculate(float x, float y) = 0;
 
-   virtual ~my_plugin_api() {}
+   virtual ~plugin_base() {}
 };
 //]
    

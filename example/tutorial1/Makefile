@@ -1,6 +1,8 @@
+run : main.elf libplugin.so
+	./main.elf ./
 main.elf : tutorial1.cpp
 	g++ -std=c++17 tutorial1.cpp -lstdc++fs -ldl -o main.elf
-plugin : plugin.cpp
+libplugin.so : plugin.cpp
 	g++ -std=c++17 plugin.cpp -c -fPIC -fvisibility=hidden -o plugin.o
 	g++ -shared plugin.o -o libplugin.so
 clean :

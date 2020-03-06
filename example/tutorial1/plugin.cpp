@@ -10,11 +10,11 @@
 
 //[plugcpp_my_plugin_sum
 #include <boost/config.hpp> // for BOOST_SYMBOL_EXPORT
-#include "../tutorial_common/my_plugin_api.hpp"
+#include "../tutorial_common/plugin.hpp"
 
 namespace my_namespace {
 
-class my_plugin_sum : public my_plugin_api {
+class my_plugin_sum : public plugin_base {
 public:
     my_plugin_sum() {
         std::cout << "Constructing plugin" << std::endl;
