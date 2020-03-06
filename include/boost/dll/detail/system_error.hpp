@@ -9,7 +9,6 @@
 
 #include <boost/dll/config.hpp>
 #include <boost/predef/os.h>
-#include <boost/throw_exception.hpp>
 
 #if !BOOST_OS_WINDOWS
 #   include <dlfcn.h>
@@ -31,20 +30,16 @@ namespace boost { namespace dll { namespace detail {
 #if !BOOST_OS_WINDOWS
         const char* const error_txt = dlerror();
         if (error_txt) {
-            boost::throw_exception(
-                std::system_error(
+            throw std::system_error(
                     ec,
                     message + std::string(" (dlerror system message: ") + error_txt + std::string(")")
-                )
-            );
+                );
         }
 #endif
 
-        boost::throw_exception(
-            std::system_error(
+        throw std::system_error(
                 ec, message
-            )
-        );
+            );
     }
 
 }}} // boost::dll::detail

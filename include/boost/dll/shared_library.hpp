@@ -410,11 +410,9 @@ private:
             );
 
             // report_error() calls dlsym, do not use it here!
-            boost::throw_exception(
-                std::system_error(
+            throw std::system_error(
                     ec, "boost::dll::shared_library::get() failed: no library was loaded"
-                )
-            );
+                );
         }
 
         void* const ret = base_t::symbol_addr(sb, ec);
@@ -456,11 +454,9 @@ public:
                 std::errc::bad_file_descriptor
             );
 
-            boost::throw_exception(
-                std::system_error(
+            throw std::system_error(
                     ec, "boost::dll::shared_library::location() failed (no library was loaded)"
-                )
-            );
+                );
         }
 
         std::filesystem::path full_path = base_t::full_module_path(ec);

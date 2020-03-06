@@ -256,11 +256,9 @@ inline std::unique_ptr<T, detail::deleter<T>> imported_class<T>::make_data(const
         );
 
         // report_error() calls dlsym, do not use it here!
-        boost::throw_exception(
-            std::system_error(
+        throw std::system_error(
                 ec, "boost::dll::detail::make_data() failed: no allocating ctor or dtor was found"
-            )
-        );
+            );
     }
 
      return std::unique_ptr<T, detail::deleter<T>> (
@@ -285,11 +283,9 @@ inline std::unique_ptr<T, detail::deleter<T>> imported_class<T>::make_data(const
         );
 
         // report_error() calls dlsym, do not use it here!
-        boost::throw_exception(
-            std::system_error(
+        throw std::system_error(
                 ec, "boost::dll::detail::make_data() failed: no regular ctor or dtor was found"
-            )
-        );
+            );
     }
 
     T *data = reinterpret_cast<T*>(new char[size]);
