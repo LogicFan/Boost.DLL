@@ -52,7 +52,7 @@ namespace detail {
     */
     template <class T>
     inline std::filesystem::path symbol_location_ptr(T ptr_to_symbol, std::error_code& ec) {
-        BOOST_STATIC_ASSERT_MSG(std::is_pointer<T>::value, "boost::dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
+        static_assert(std::is_pointer<T>::value, "boost::dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
         std::filesystem::path ret;
         if (!ptr_to_symbol) {
             ec = std::make_error_code(
@@ -138,7 +138,7 @@ namespace detail {
         );
     }
 
-#if BOOST_COMP_MSVC < BOOST_VERSION_NUMBER(14,0,0)
+#if _MSC_VER < 1400
     // Without this MSVC 7.1 fails with:
     //  ..\boost\dll\runtime_symbol_info.hpp(133) : error C2780: 'filesystem::path dll::symbol_location(const T &)' : expects 1 arguments - 2 provided
     template <class T>
