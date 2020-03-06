@@ -251,7 +251,7 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(const smart_library& lib, co
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class ...Args>
-BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(smart_library) lib, const char* name) {
+BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(smart_library &&lib, const char* name) {
     typedef typename boost::dll::experimental::detail::mangled_import_type<detail::sequence<Args...>> type;
 
     return type::make(lib, name);
@@ -259,7 +259,7 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(smart_library) 
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class ...Args>
-BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(smart_library) lib, const std::string& name) {
+BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(smart_library &&lib, const std::string& name) {
     return import_mangled<Args...>(std::move(lib), name.c_str());
 }
 
@@ -280,7 +280,7 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(const shared_library& lib, c
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class ...Args>
-BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library) lib, const char* name) {
+BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(shared_library &&lib, const char* name) {
     typedef typename boost::dll::experimental::detail::mangled_import_type<detail::sequence<Args...>> type;
 
     boost::dll::experimental::smart_library p(std::move(lib));
@@ -290,7 +290,7 @@ BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library)
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class ...Args>
-BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(BOOST_RV_REF(shared_library) lib, const std::string& name) {
+BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE import_mangled(shared_library &&lib, const std::string& name) {
     return import_mangled<Args...>(std::move(lib), name.c_str());
 }
 

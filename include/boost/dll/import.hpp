@@ -144,7 +144,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(const shared_library& lib, const std::string
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char* name) {
+BOOST_DLL_IMPORT_RESULT_TYPE import(shared_library &&lib, const char* name) {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
 
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(
@@ -155,7 +155,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const std::string& name) {
+BOOST_DLL_IMPORT_RESULT_TYPE import(shared_library &&lib, const std::string& name) {
     return import<T>(std::move(lib), name.c_str());
 }
 
@@ -234,7 +234,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(const shared_library& lib, const std::
 
 //! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, const char* name) {
+BOOST_DLL_IMPORT_RESULT_TYPE import_alias(shared_library &&lib, const char* name) {
     typedef typename boost::dll::detail::import_type<T>::base_type type;
 
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(
@@ -245,7 +245,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, cons
 
 //! \overload boost::dll::import_alias(const std::filesystem::path& lib, const char* name, load_mode::type mode)
 template <class T>
-BOOST_DLL_IMPORT_RESULT_TYPE import_alias(BOOST_RV_REF(shared_library) lib, const std::string& name) {
+BOOST_DLL_IMPORT_RESULT_TYPE import_alias(shared_library &&lib, const std::string& name) {
     return import_alias<T>(std::move(lib), name.c_str());
 }
 

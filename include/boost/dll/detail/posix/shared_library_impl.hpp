@@ -12,8 +12,6 @@
 #include <boost/dll/detail/posix/path_from_handle.hpp>
 #include <boost/dll/detail/posix/program_location_impl.hpp>
 
-#include <boost/move/utility.hpp>
-#include <boost/swap.hpp>
 #include <boost/predef/os.h>
 
 #include <dlfcn.h>
@@ -32,8 +30,6 @@ namespace boost { namespace dll { namespace detail {
 
 class shared_library_impl {
 
-    BOOST_MOVABLE_BUT_NOT_COPYABLE(shared_library_impl)
-
 public:
     typedef void* native_handle_t;
 
@@ -45,13 +41,13 @@ public:
         unload();
     }
 
-    shared_library_impl(BOOST_RV_REF(shared_library_impl) sl) noexcept
+    shared_library_impl(shared_library_impl &&sl) noexcept
         : handle_(sl.handle_)
     {
         sl.handle_ = NULL;
     }
 
-    shared_library_impl & operator=(BOOST_RV_REF(shared_library_impl) sl) noexcept {
+    shared_library_impl & operator=(shared_library_impl &&sl) noexcept {
         swap(sl);
         return *this;
     }
@@ -175,7 +171,7 @@ public:
     }
 
     void swap(shared_library_impl& rhs) noexcept {
-        boost::swap(handle_, rhs.handle_);
+        std::swap(handle_, rhs.handle_);
     }
 
     std::filesystem::path full_module_path(std::error_code &ec) const {

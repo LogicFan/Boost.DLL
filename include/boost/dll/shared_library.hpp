@@ -47,7 +47,6 @@ class shared_library
 /// @endcond
 {
     typedef boost::dll::detail::shared_library_impl base_t;
-    BOOST_COPYABLE_AND_MOVABLE(shared_library)
 
 public:
 #ifdef BOOST_DLL_DOXYGEN
@@ -100,7 +99,7 @@ public:
     * \post lib.is_loaded() returns false, this->is_loaded() return true.
     * \throw Nothing.
     */
-    shared_library(BOOST_RV_REF(shared_library) lib) noexcept
+    shared_library(shared_library &&lib) noexcept
         : base_t(std::move(static_cast<base_t&>(lib)))
     {}
 
@@ -141,7 +140,7 @@ public:
     * \post lib == *this
     * \throw \forcedlinkfs{system_error}, std::bad_alloc in case of insufficient memory.
     */
-    shared_library& operator=(BOOST_COPY_ASSIGN_REF(shared_library) lib) {
+    shared_library& operator=(shared_library const &lib) {
         std::error_code ec;
         assign(lib, ec);
         if (ec) {
@@ -158,7 +157,7 @@ public:
     * \post lib.is_loaded() returns false.
     * \throw Nothing.
     */
-    shared_library& operator=(BOOST_RV_REF(shared_library) lib) noexcept {
+    shared_library& operator=(shared_library &&lib) noexcept {
         if (lib.native() != native()) {
             swap(lib);
         }
