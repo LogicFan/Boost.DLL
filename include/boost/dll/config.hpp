@@ -10,7 +10,3 @@
 #pragma once
 
 #include <boost/config.hpp>
-
-namespace dll {
-using namespace boost::dll;
-}
