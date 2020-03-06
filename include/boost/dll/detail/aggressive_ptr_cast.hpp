@@ -12,7 +12,6 @@
 #include <boost/core/addressof.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_pointer.hpp>
-#include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <cstring>              // std::memcpy
@@ -26,7 +25,7 @@ namespace boost { namespace dll { namespace detail {
 // GCC warns when reinterpret_cast between function pointer and object pointer occur.
 // This method suppress the warnings and ensures that such casts are safe.
 template <class To, class From>
-BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value || boost::is_reference<To>::value || std::is_member_pointer<From>::value), To>::type
+BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value || std::is_reference<To>::value || std::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
     BOOST_STATIC_ASSERT_MSG(
@@ -54,7 +53,7 @@ BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value ||
 #endif
 
 template <class To, class From>
-BOOST_FORCEINLINE typename std::enable_if<!(!boost::is_reference<To>::value || std::is_member_pointer<From>::value), To>::type
+BOOST_FORCEINLINE typename std::enable_if<!(!std::is_reference<To>::value || std::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
     BOOST_STATIC_ASSERT_MSG(
