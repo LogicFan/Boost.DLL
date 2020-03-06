@@ -8,8 +8,8 @@
 
 #include <boost/dll/smart_library.hpp>
 #include <boost/dll/import_mangled.hpp>
-#include <memory>
 
+#include <memory>
 #include <filesystem>
 #include <system_error>
 #include <utility>

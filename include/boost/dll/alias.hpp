@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include <boost/dll/config.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/predef/compiler.h>
 #include <boost/predef/os.h>
+
+#include <boost/dll/config.hpp>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
 
 #if BOOST_COMP_GNUC // MSVC does not have <stdint.h> and defines it in some other header, MinGW requires that header.
@@ -40,7 +40,7 @@ namespace boost { namespace dll {
 #define BOOST_DLL_SELECTANY __declspec(selectany)
 
 #define BOOST_DLL_SECTION(SectionName, Permissions)                                             \
-    BOOST_STATIC_ASSERT_MSG(                                                                    \
+    static_assert(                                                                    \
         sizeof(#SectionName) < 10,                                                              \
         "Some platforms require section names to be at most 8 bytes"                            \
     );                                                                                          \
@@ -79,7 +79,7 @@ namespace boost { namespace dll {
 * \param Permissions Can be "read" or "write" (without quotes!).
 */
 #define BOOST_DLL_SECTION(SectionName, Permissions)                                             \
-    BOOST_STATIC_ASSERT_MSG(                                                                    \
+    static_assert(                                                                    \
         sizeof(#SectionName) < 10,                                                              \
         "Some platforms require section names to be at most 8 bytes"                            \
     );                                                                                          \
@@ -88,7 +88,7 @@ namespace boost { namespace dll {
 #else // #if !BOOST_OS_MACOS && !BOOST_OS_IOS
 
 #define BOOST_DLL_SECTION(SectionName, Permissions)                                             \
-    BOOST_STATIC_ASSERT_MSG(                                                                    \
+    static_assert(                                                                    \
         sizeof(#SectionName) < 10,                                                              \
         "Some platforms require section names to be at most 8 bytes"                            \
     );                                                                                          \

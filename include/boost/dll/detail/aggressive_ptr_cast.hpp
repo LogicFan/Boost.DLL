@@ -10,7 +10,6 @@
 #include <boost/dll/config.hpp>
 
 #include <boost/core/addressof.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
@@ -29,18 +28,18 @@ template <class To, class From>
 BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value || boost::is_reference<To>::value || std::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         boost::is_pointer<To>::value && boost::is_pointer<From>::value,
         "`agressive_ptr_cast` function must be used only for pointer casting."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         std::is_void< typename boost::remove_pointer<To>::type >::value
         || std::is_void< typename boost::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         sizeof(v) == sizeof(To),
         "Pointer to function and pointer to object differ in size on your platform."
     );
@@ -57,17 +56,17 @@ template <class To, class From>
 BOOST_FORCEINLINE typename std::enable_if<!(!boost::is_reference<To>::value || std::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         boost::is_pointer<From>::value,
         "`agressive_ptr_cast` function must be used only for pointer casting."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         std::is_void< typename boost::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         sizeof(v) == sizeof(typename boost::remove_reference<To>::type*),
         "Pointer to function and pointer to object differ in size on your platform."
     );
@@ -86,12 +85,12 @@ template <class To, class From>
 BOOST_FORCEINLINE typename std::enable_if<!(!std::is_member_pointer<To>::value || std::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From v) noexcept
 {
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         boost::is_pointer<From>::value,
         "`agressive_ptr_cast` function must be used only for pointer casting."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         std::is_void< typename boost::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
@@ -105,17 +104,17 @@ template <class To, class From>
 BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value || !std::is_member_pointer<From>::value), To>::type
     aggressive_ptr_cast(From /* v */) noexcept
 {
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         boost::is_pointer<To>::value,
         "`agressive_ptr_cast` function must be used only for pointer casting."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         std::is_void< typename boost::remove_pointer<To>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         !sizeof(From),
         "Casting from member pointers to void pointer is not implemnted in `agressive_ptr_cast`."
     );
