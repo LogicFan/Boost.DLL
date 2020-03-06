@@ -74,7 +74,7 @@ public:
 
         // Do not allow opening NULL paths. User must use program_location() instead
         if (sl.empty()) {
-            dll::detail::reset_dlerror();
+            boost::dll::detail::reset_dlerror();
             ec = std::make_error_code(
                 std::errc::bad_file_descriptor
             );
@@ -115,11 +115,11 @@ public:
             std::filesystem::path actual_path = decorate(sl);
             handle_ = dlopen(actual_path.c_str(), native_mode);
             if (handle_) {
-                dll::detail::reset_dlerror();
+                boost::dll::detail::reset_dlerror();
                 return;
             }
             std::error_code prog_loc_err;
-            std::filesystem::path loc = dll::detail::program_location_impl(prog_loc_err);
+            std::filesystem::path loc = boost::dll::detail::program_location_impl(prog_loc_err);
             if (std::filesystem::exists(actual_path) && !std::filesystem::equivalent(sl, loc, prog_loc_err)) {
                 // decorated path exists : current error is not a bad file descriptor and we are not trying to load the executable itself
                 ec = std::make_error_code(
@@ -132,7 +132,7 @@ public:
         // Opening by exactly specified path
         handle_ = dlopen(sl.c_str(), native_mode);
         if (handle_) {
-            dll::detail::reset_dlerror();
+            boost::dll::detail::reset_dlerror();
             return;
         }
 
@@ -144,14 +144,14 @@ public:
         // We assume that usually user wants to load a dynamic library not the executable itself, that's why
         // we try this only after traditional load fails.
         std::error_code prog_loc_err;
-        std::filesystem::path loc = dll::detail::program_location_impl(prog_loc_err);
+        std::filesystem::path loc = boost::dll::detail::program_location_impl(prog_loc_err);
         if (!prog_loc_err && std::filesystem::equivalent(sl, loc, prog_loc_err) && !prog_loc_err) {
             // As is known the function dlopen() loads the dynamic library file
             // named by the null-terminated string filename and returns an opaque
             // "handle" for the dynamic library. If filename is NULL, then the
             // returned handle is for the main program.
             ec.clear();
-            dll::detail::reset_dlerror();
+            boost::dll::detail::reset_dlerror();
             handle_ = dlopen(NULL, native_mode);
             if (!handle_) {
                 ec = std::make_error_code(
@@ -179,7 +179,7 @@ public:
     }
 
     std::filesystem::path full_module_path(std::error_code &ec) const {
-        return dll::detail::path_from_handle(handle_, ec);
+        return boost::dll::detail::path_from_handle(handle_, ec);
     }
 
     static std::filesystem::path suffix() {
@@ -216,4 +216,4 @@ private:
     native_handle_t         handle_;
 };
 
-}}} // dll::detail
+}}} // boost::dll::detail

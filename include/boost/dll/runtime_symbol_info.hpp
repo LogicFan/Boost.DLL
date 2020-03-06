@@ -21,13 +21,13 @@
 #include <system_error>
 
 /// \file boost/dll/runtime_symbol_info.hpp
-/// \brief Provides methods for getting acceptable by dll::shared_library location of symbol, source line or program.
+/// \brief Provides methods for getting acceptable by boost::dll::shared_library location of symbol, source line or program.
 namespace boost { namespace dll {
 
 #if defined(_WIN32)
 namespace detail {
     inline std::filesystem::path program_location_impl(std::error_code& ec) {
-        return dll::detail::path_from_handle(NULL, ec);
+        return boost::dll::detail::path_from_handle(NULL, ec);
     }
 } // namespace detail
 #endif
@@ -50,7 +50,7 @@ namespace detail {
     */
     template <class T>
     inline std::filesystem::path symbol_location_ptr(T ptr_to_symbol, std::error_code& ec) {
-        static_assert(std::is_pointer<T>::value, "dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
+        static_assert(std::is_pointer<T>::value, "boost::dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
         std::filesystem::path ret;
         if (!ptr_to_symbol) {
             ec = std::make_error_code(
@@ -61,16 +61,16 @@ namespace detail {
         }
         ec.clear();
 
-        const void* ptr = dll::detail::aggressive_ptr_cast<const void*>(ptr_to_symbol);
+        const void* ptr = boost::dll::detail::aggressive_ptr_cast<const void*>(ptr_to_symbol);
 
 #if defined(_WIN32)
         boost::winapi::MEMORY_BASIC_INFORMATION_ mbi;
         if (!boost::winapi::VirtualQuery(ptr, &mbi, sizeof(mbi))) {
-            ec = dll::detail::last_error_code();
+            ec = boost::dll::detail::last_error_code();
             return ret;
         }
 
-        return dll::detail::path_from_handle(reinterpret_cast<boost::winapi::HMODULE_>(mbi.AllocationBase), ec);
+        return boost::dll::detail::path_from_handle(reinterpret_cast<boost::winapi::HMODULE_>(mbi.AllocationBase), ec);
 #else
         Dl_info info;
 
@@ -80,7 +80,7 @@ namespace detail {
         if (res) {
             ret = info.dli_fname;
         } else {
-            dll::detail::reset_dlerror();
+            boost::dll::detail::reset_dlerror();
             ec = std::make_error_code(
                 std::errc::bad_address
             );
@@ -95,10 +95,10 @@ namespace detail {
     inline std::filesystem::path symbol_location_ptr(T ptr_to_symbol) {
         std::filesystem::path ret;
         std::error_code ec;
-        ret = dll::symbol_location_ptr(ptr_to_symbol, ec);
+        ret = boost::dll::symbol_location_ptr(ptr_to_symbol, ec);
 
         if (ec) {
-            dll::detail::report_error(ec, "dll::symbol_location_ptr(T ptr_to_symbol) failed");
+            boost::dll::detail::report_error(ec, "boost::dll::symbol_location_ptr(T ptr_to_symbol) failed");
         }
 
         return ret;
@@ -130,8 +130,8 @@ namespace detail {
     template <class T>
     inline std::filesystem::path symbol_location(const T& symbol, std::error_code& ec) {
         ec.clear();
-        return dll::symbol_location_ptr(
-            dll::detail::aggressive_ptr_cast<const void*>(std::addressof(symbol)),
+        return boost::dll::symbol_location_ptr(
+            boost::dll::detail::aggressive_ptr_cast<const void*>(std::addressof(symbol)),
             ec
         );
     }
@@ -149,13 +149,13 @@ namespace detail {
     {
         std::filesystem::path ret;
         std::error_code ec;
-        ret = dll::symbol_location_ptr(
-            dll::detail::aggressive_ptr_cast<const void*>(std::addressof(symbol)),
+        ret = boost::dll::symbol_location_ptr(
+            boost::dll::detail::aggressive_ptr_cast<const void*>(std::addressof(symbol)),
             ec
         );
 
         if (ec) {
-            dll::detail::report_error(ec, "dll::symbol_location(const T& symbol) failed");
+            boost::dll::detail::report_error(ec, "boost::dll::symbol_location(const T& symbol) failed");
         }
 
         return ret;
@@ -177,7 +177,7 @@ namespace detail {
     static inline std::filesystem::path this_line_location(std::error_code& ec) {
         typedef std::filesystem::path(func_t)(std::error_code& );
         func_t& f = this_line_location;
-        return dll::symbol_location(f, ec);
+        return boost::dll::symbol_location(f, ec);
     }
 
     //! \overload this_line_location(std::error_code& ec)
@@ -187,7 +187,7 @@ namespace detail {
         ret = this_line_location(ec);
 
         if (ec) {
-            dll::detail::report_error(ec, "dll::this_line_location() failed");
+            boost::dll::detail::report_error(ec, "boost::dll::this_line_location() failed");
         }
 
         return ret;
@@ -209,17 +209,17 @@ namespace detail {
     */
     inline std::filesystem::path program_location(std::error_code& ec) {
         ec.clear();
-        return dll::detail::program_location_impl(ec);
+        return boost::dll::detail::program_location_impl(ec);
     }
 
     //! \overload program_location(std::error_code& ec) {
     inline std::filesystem::path program_location() {
         std::filesystem::path ret;
         std::error_code ec;
-        ret = dll::detail::program_location_impl(ec);
+        ret = boost::dll::detail::program_location_impl(ec);
 
         if (ec) {
-            dll::detail::report_error(ec, "dll::program_location() failed");
+            boost::dll::detail::report_error(ec, "boost::dll::program_location() failed");
         }
 
         return ret;

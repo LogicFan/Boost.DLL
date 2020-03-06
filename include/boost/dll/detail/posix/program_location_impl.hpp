@@ -38,7 +38,7 @@ namespace boost { namespace dll { namespace detail {
         delete[] p;
         return ret;
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #elif BOOST_OS_SOLARIS
 
@@ -49,7 +49,7 @@ namespace boost { namespace dll { namespace detail {
 
         return std::filesystem::path(getexecname());
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #elif BOOST_OS_BSD_FREE
 
@@ -72,7 +72,7 @@ namespace boost { namespace dll { namespace detail {
 
         return std::filesystem::path(buf);
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 
 
@@ -82,7 +82,7 @@ namespace boost { namespace dll { namespace detail {
     inline std::filesystem::path program_location_impl(std::error_code &ec) {
         return std::filesystem::read_symlink("/proc/curproc/exe", ec);
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #elif BOOST_OS_BSD_DRAGONFLY
 
@@ -91,7 +91,7 @@ namespace boost { namespace dll { namespace detail {
     inline std::filesystem::path program_location_impl(std::error_code &ec) {
         return std::filesystem::read_symlink("/proc/curproc/file", ec);
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #elif BOOST_OS_QNX
 
@@ -113,19 +113,19 @@ namespace boost { namespace dll { namespace detail {
 
         return std::filesystem::path(s);
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #else  // BOOST_OS_LINUX || BOOST_OS_UNIX || BOOST_OS_HPUX || BOOST_OS_ANDROID
 
 namespace boost { namespace dll { namespace detail {
     inline std::filesystem::path program_location_impl(std::error_code &ec) {
         // We can not use
-        // dll::detail::path_from_handle(dlopen(NULL, RTLD_LAZY | RTLD_LOCAL), ignore);
+        // boost::dll::detail::path_from_handle(dlopen(NULL, RTLD_LAZY | RTLD_LOCAL), ignore);
         // because such code returns empty path.
 
         return std::filesystem::read_symlink("/proc/self/exe", ec);   // Linux specific
     }
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #endif
 

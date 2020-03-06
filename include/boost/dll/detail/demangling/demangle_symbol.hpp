@@ -98,7 +98,7 @@ inline std::string demangle_symbol(const std::string& mangled_name)
 }
 namespace experimental
 {
-using ::dll::detail::demangle_symbol;
+using ::boost::dll::detail::demangle_symbol;
 }
 
 }}

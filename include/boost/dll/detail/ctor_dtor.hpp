@@ -184,4 +184,4 @@ destructor<Class> load_dtor(Lib & lib, const mangled_storage_impl::dtor_sym & dt
 
 #endif
 
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail

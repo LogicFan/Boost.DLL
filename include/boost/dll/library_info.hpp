@@ -18,7 +18,7 @@
 #include <assert.h>
 
 /// \file boost/dll/library_info.hpp
-/// \brief Contains only the dll::library_info class that is capable of
+/// \brief Contains only the boost::dll::library_info class that is capable of
 /// extracting different information from binaries.
 
 namespace boost { namespace dll {
@@ -71,27 +71,27 @@ private:
     }
 
     void init(bool throw_if_not_native) {
-        if (dll::detail::elf_info32::parsing_supported(f_)) {
+        if (boost::dll::detail::elf_info32::parsing_supported(f_)) {
             if (throw_if_not_native) { throw_if_in_windows(); throw_if_in_macos(); }
 
             fmt_ = fmt_elf_info32;
-        } else if (dll::detail::elf_info64::parsing_supported(f_)) {
+        } else if (boost::dll::detail::elf_info64::parsing_supported(f_)) {
             if (throw_if_not_native) { throw_if_in_windows(); throw_if_in_macos(); throw_if_in_32bit(); }
 
             fmt_ = fmt_elf_info64;
-        } else if (dll::detail::pe_info32::parsing_supported(f_)) {
+        } else if (boost::dll::detail::pe_info32::parsing_supported(f_)) {
             if (throw_if_not_native) { throw_if_in_linux(); throw_if_in_macos(); }
 
             fmt_ = fmt_pe_info32;
-        } else if (dll::detail::pe_info64::parsing_supported(f_)) {
+        } else if (boost::dll::detail::pe_info64::parsing_supported(f_)) {
             if (throw_if_not_native) { throw_if_in_linux(); throw_if_in_macos(); throw_if_in_32bit(); }
 
             fmt_ = fmt_pe_info64;
-        } else if (dll::detail::macho_info32::parsing_supported(f_)) {
+        } else if (boost::dll::detail::macho_info32::parsing_supported(f_)) {
             if (throw_if_not_native) { throw_if_in_linux(); throw_if_in_windows(); }
 
             fmt_ = fmt_macho_info32;
-        } else if (dll::detail::macho_info64::parsing_supported(f_)) {
+        } else if (boost::dll::detail::macho_info64::parsing_supported(f_)) {
             if (throw_if_not_native) { throw_if_in_linux(); throw_if_in_windows(); throw_if_in_32bit(); }
 
             fmt_ = fmt_macho_info64;
@@ -129,12 +129,12 @@ public:
     */
     std::vector<std::string> sections() {
         switch (fmt_) {
-        case fmt_elf_info32:   return dll::detail::elf_info32::sections(f_);
-        case fmt_elf_info64:   return dll::detail::elf_info64::sections(f_);
-        case fmt_pe_info32:    return dll::detail::pe_info32::sections(f_);
-        case fmt_pe_info64:    return dll::detail::pe_info64::sections(f_);
-        case fmt_macho_info32: return dll::detail::macho_info32::sections(f_);
-        case fmt_macho_info64: return dll::detail::macho_info64::sections(f_);
+        case fmt_elf_info32:   return boost::dll::detail::elf_info32::sections(f_);
+        case fmt_elf_info64:   return boost::dll::detail::elf_info64::sections(f_);
+        case fmt_pe_info32:    return boost::dll::detail::pe_info32::sections(f_);
+        case fmt_pe_info64:    return boost::dll::detail::pe_info64::sections(f_);
+        case fmt_macho_info32: return boost::dll::detail::macho_info32::sections(f_);
+        case fmt_macho_info64: return boost::dll::detail::macho_info64::sections(f_);
         };
         assert(false);
         return {};
@@ -145,12 +145,12 @@ public:
     */
     std::vector<std::string> symbols() {
         switch (fmt_) {
-        case fmt_elf_info32:   return dll::detail::elf_info32::symbols(f_);
-        case fmt_elf_info64:   return dll::detail::elf_info64::symbols(f_);
-        case fmt_pe_info32:    return dll::detail::pe_info32::symbols(f_);
-        case fmt_pe_info64:    return dll::detail::pe_info64::symbols(f_);
-        case fmt_macho_info32: return dll::detail::macho_info32::symbols(f_);
-        case fmt_macho_info64: return dll::detail::macho_info64::symbols(f_);
+        case fmt_elf_info32:   return boost::dll::detail::elf_info32::symbols(f_);
+        case fmt_elf_info64:   return boost::dll::detail::elf_info64::symbols(f_);
+        case fmt_pe_info32:    return boost::dll::detail::pe_info32::symbols(f_);
+        case fmt_pe_info64:    return boost::dll::detail::pe_info64::symbols(f_);
+        case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_);
+        case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_);
         };
         assert(false);
         return {};
@@ -162,12 +162,12 @@ public:
     */
     std::vector<std::string> symbols(const char* section_name) {
         switch (fmt_) {
-        case fmt_elf_info32:   return dll::detail::elf_info32::symbols(f_, section_name);
-        case fmt_elf_info64:   return dll::detail::elf_info64::symbols(f_, section_name);
-        case fmt_pe_info32:    return dll::detail::pe_info32::symbols(f_, section_name);
-        case fmt_pe_info64:    return dll::detail::pe_info64::symbols(f_, section_name);
-        case fmt_macho_info32: return dll::detail::macho_info32::symbols(f_, section_name);
-        case fmt_macho_info64: return dll::detail::macho_info64::symbols(f_, section_name);
+        case fmt_elf_info32:   return boost::dll::detail::elf_info32::symbols(f_, section_name);
+        case fmt_elf_info64:   return boost::dll::detail::elf_info64::symbols(f_, section_name);
+        case fmt_pe_info32:    return boost::dll::detail::pe_info32::symbols(f_, section_name);
+        case fmt_pe_info64:    return boost::dll::detail::pe_info64::symbols(f_, section_name);
+        case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_, section_name);
+        case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_, section_name);
         };
         assert(false);
         return {};
@@ -177,12 +177,12 @@ public:
     //! \overload std::vector<std::string> symbols(const char* section_name)
     std::vector<std::string> symbols(const std::string& section_name) {
         switch (fmt_) {
-        case fmt_elf_info32:   return dll::detail::elf_info32::symbols(f_, section_name.c_str());
-        case fmt_elf_info64:   return dll::detail::elf_info64::symbols(f_, section_name.c_str());
-        case fmt_pe_info32:    return dll::detail::pe_info32::symbols(f_, section_name.c_str());
-        case fmt_pe_info64:    return dll::detail::pe_info64::symbols(f_, section_name.c_str());
-        case fmt_macho_info32: return dll::detail::macho_info32::symbols(f_, section_name.c_str());
-        case fmt_macho_info64: return dll::detail::macho_info64::symbols(f_, section_name.c_str());
+        case fmt_elf_info32:   return boost::dll::detail::elf_info32::symbols(f_, section_name.c_str());
+        case fmt_elf_info64:   return boost::dll::detail::elf_info64::symbols(f_, section_name.c_str());
+        case fmt_pe_info32:    return boost::dll::detail::pe_info32::symbols(f_, section_name.c_str());
+        case fmt_pe_info64:    return boost::dll::detail::pe_info64::symbols(f_, section_name.c_str());
+        case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_, section_name.c_str());
+        case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_, section_name.c_str());
         };
         assert(false);
         return {};

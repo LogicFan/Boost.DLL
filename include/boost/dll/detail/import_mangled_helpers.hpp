@@ -102,7 +102,7 @@ struct mem_fn_def
 {
     typedef Class class_type;
     typedef Func  func_type;
-    typedef typename dll::detail::get_mem_fn_type<Class, Func>::mem_fn mem_fn;
+    typedef typename boost::dll::detail::get_mem_fn_type<Class, Func>::mem_fn mem_fn;
 };
 
 template<class ...Args>
@@ -198,7 +198,7 @@ template<class T, class U, class ...Args>
 struct is_mem_fn_seq_impl
 {
     typedef typename boost::conditional<
-                 std::is_function<U>::value || dll::experimental::detail::unqalified_is_same<T, U>::value,
+                 std::is_function<U>::value || boost::dll::experimental::detail::unqalified_is_same<T, U>::value,
                  typename is_mem_fn_seq_impl<T, Args...>::type,
                  boost::false_type>::type type;
 };
@@ -215,7 +215,7 @@ template<class T, class U, class Last>
 struct is_mem_fn_seq_impl<T, U, Last>
 {
     typedef typename boost::conditional<
-                 (std::is_function<U>::value || dll::experimental::detail::unqalified_is_same<T, U>::value)
+                 (std::is_function<U>::value || boost::dll::experimental::detail::unqalified_is_same<T, U>::value)
                  && std::is_function<Last>::value,
                  boost::true_type, boost::false_type>::type type;
 };
@@ -251,7 +251,7 @@ template <class Class, class Return, class...Args, class T2, class ...Ts>
 struct mem_fn_tuple<mem_fn_def<Class, Return(Args...)>, T2, Ts...>
     : mem_fn_tuple<T2, Ts...>
 {
-    typedef typename dll::detail::get_mem_fn_type<Class, Return(Args...)>::mem_fn mem_fn;
+    typedef typename boost::dll::detail::get_mem_fn_type<Class, Return(Args...)>::mem_fn mem_fn;
     mem_fn f_;
 
     constexpr mem_fn_tuple(mem_fn f, typename T2::mem_fn t2, typename Ts::mem_fn ... ts)
@@ -268,7 +268,7 @@ struct mem_fn_tuple<mem_fn_def<Class, Return(Args...)>, T2, Ts...>
 
 template <class Class, class Return, class...Args>
 struct mem_fn_tuple<mem_fn_def<Class, Return(Args...)>> {
-    typedef typename dll::detail::get_mem_fn_type<Class, Return(Args...)>::mem_fn mem_fn;
+    typedef typename boost::dll::detail::get_mem_fn_type<Class, Return(Args...)>::mem_fn mem_fn;
     mem_fn f_;
 
     constexpr mem_fn_tuple(mem_fn f)

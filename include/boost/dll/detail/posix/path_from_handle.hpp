@@ -45,12 +45,12 @@ namespace boost { namespace dll { namespace detail {
 
             // If the handle is the same as what was passed in (modulo mode bits), return this image name
             if (handle == strip_handle(probe_handle)) {
-                dll::detail::reset_dlerror();
+                boost::dll::detail::reset_dlerror();
                 return image_name;
             }
         }
 
-        dll::detail::reset_dlerror();
+        boost::dll::detail::reset_dlerror();
         ec = std::make_error_code(
             std::errc::bad_file_descriptor
         );
@@ -58,7 +58,7 @@ namespace boost { namespace dll { namespace detail {
         return std::filesystem::path();
     }
 
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #elif BOOST_OS_ANDROID
 
@@ -81,18 +81,18 @@ namespace boost { namespace dll { namespace detail {
         const struct soinfo* si = reinterpret_cast<const struct soinfo*>(
             static_cast<const char*>(handle) + work_around_b_24465209__offset
         );
-        std::filesystem::path ret = dll::symbol_location_ptr(si->base, ec);
+        std::filesystem::path ret = boost::dll::symbol_location_ptr(si->base, ec);
 
         if (ec) {
             ec.clear();
             si = static_cast<const struct soinfo*>(handle);
-            return dll::symbol_location_ptr(si->base, ec);
+            return boost::dll::symbol_location_ptr(si->base, ec);
         }
 
         return ret;
     }
 
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #else // #if BOOST_OS_MACOS || BOOST_OS_IOS || BOOST_OS_ANDROID
 
@@ -141,7 +141,7 @@ namespace boost { namespace dll { namespace detail {
         link_map = static_cast<const struct link_map*>(handle);
 #endif
         if (!link_map) {
-            dll::detail::reset_dlerror();
+            boost::dll::detail::reset_dlerror();
             ec = std::make_error_code(
                 std::errc::bad_file_descriptor
             );
@@ -156,7 +156,7 @@ namespace boost { namespace dll { namespace detail {
         return std::filesystem::path(link_map->l_name);
     }
 
-}}} // namespace dll::detail
+}}} // namespace boost::dll::detail
 
 #endif // #if BOOST_OS_MACOS || BOOST_OS_IOS
 

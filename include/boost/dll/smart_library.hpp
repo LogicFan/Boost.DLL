@@ -8,7 +8,7 @@
 
 /// \file boost/dll/smart_library.hpp
 /// \warning Extremely experimental! Requires C++14! Will change in next version of Boost! boost/dll/smart_library.hpp is not included in boost/dll.hpp
-/// \brief Contains the dll::experimental::smart_library class for loading mangled symbols.
+/// \brief Contains the boost::dll::experimental::smart_library class for loading mangled symbols.
 
 #include "config.hpp"
 #if defined(_MSC_VER) // MSVC, Clang-cl, and ICC on Windows
@@ -31,10 +31,10 @@ namespace boost {
 namespace dll {
 namespace experimental {
 
-using dll::detail::constructor;
-using dll::detail::destructor;
-using dll::detail::mangled_storage_impl;
-using dll::detail::get_mem_fn_type;
+using boost::dll::detail::constructor;
+using boost::dll::detail::destructor;
+using boost::dll::detail::mangled_storage_impl;
+using boost::dll::detail::get_mem_fn_type;
 
 /*!
 * \brief This class is an extension of \ref shared_library, which allows to load C++ symbols.
@@ -169,7 +169,7 @@ public:
         _lib.load(lib_path, mode, ec);
 
         if (ec) {
-            dll::detail::report_error(ec, "load() failed");
+            boost::dll::detail::report_error(ec, "load() failed");
         }
     }
 
@@ -256,8 +256,8 @@ public:
      * \throw \forcedlinkfs{system_error} if symbol does not exist or if the DLL/DSO was not loaded.
      */
     template<typename Class, typename Func>
-    typename dll::detail::get_mem_fn_type<Class, Func>::mem_fn get_mem_fn(const std::string& name) const {
-        return _lib.get<typename dll::detail::get_mem_fn_type<Class, Func>::mem_fn>(
+    typename boost::dll::detail::get_mem_fn_type<Class, Func>::mem_fn get_mem_fn(const std::string& name) const {
+        return _lib.get<typename boost::dll::detail::get_mem_fn_type<Class, Func>::mem_fn>(
                 _storage.get_mem_fn<Class, Func>(name)
         );
     }
@@ -280,7 +280,7 @@ public:
      */
     template<typename Signature>
     constructor<Signature> get_constructor() const {
-        return dll::detail::load_ctor<Signature>(_lib, _storage.get_constructor<Signature>());
+        return boost::dll::detail::load_ctor<Signature>(_lib, _storage.get_constructor<Signature>());
     }
 
     /*!
@@ -302,7 +302,7 @@ public:
      */
     template<typename Class>
     destructor<Class> get_destructor() const {
-        return dll::detail::load_dtor<Class>(_lib, _storage.get_destructor<Class>());
+        return boost::dll::detail::load_dtor<Class>(_lib, _storage.get_destructor<Class>());
     }
     /*!
      * Load the typeinfo of the given type.
@@ -324,7 +324,7 @@ public:
     template<typename Class>
     const std::type_info& get_type_info() const
     {
-        return dll::detail::load_type_info<Class>(_lib, _storage);
+        return boost::dll::detail::load_type_info<Class>(_lib, _storage);
     }
     /**
      * This function can be used to add a type alias.

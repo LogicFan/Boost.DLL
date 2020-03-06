@@ -123,5 +123,5 @@ BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value ||
     return 0;
 }
 
-}}} // dll::detail
+}}} // boost::dll::detail
 
