@@ -7,16 +7,14 @@
 
 #pragma once
 
-#include <boost/dll/config.hpp>
-#include <boost/predef/os.h>
-#include <boost/predef/compiler/visualc.h>
-#include <boost/dll/detail/aggressive_ptr_cast.hpp>
+#include "config.hpp"
+#include "detail/aggressive_ptr_cast.hpp"
 #if defined(_WIN32)
 #   include <boost/winapi/dll.hpp>
-#   include <boost/dll/detail/windows/path_from_handle.hpp>
+#   include "detail/windows/path_from_handle.hpp"
 #else
 #   include <dlfcn.h>
-#   include <boost/dll/detail/posix/program_location_impl.hpp>
+#   include "detail/posix/program_location_impl.hpp"
 #endif
 
 #include <filesystem>
