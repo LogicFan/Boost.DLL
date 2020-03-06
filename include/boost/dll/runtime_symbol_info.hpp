@@ -52,7 +52,7 @@ namespace detail {
     */
     template <class T>
     inline std::filesystem::path symbol_location_ptr(T ptr_to_symbol, std::error_code& ec) {
-        BOOST_STATIC_ASSERT_MSG(boost::is_pointer<T>::value, "boost::dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
+        BOOST_STATIC_ASSERT_MSG(std::is_pointer<T>::value, "boost::dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
         std::filesystem::path ret;
         if (!ptr_to_symbol) {
             ec = std::make_error_code(
