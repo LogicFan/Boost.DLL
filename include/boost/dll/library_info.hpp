@@ -7,20 +7,12 @@
 
 #pragma once
 
-#include <boost/dll/config.hpp>
-#include <boost/assert.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/predef/os.h>
-#include <boost/predef/architecture.h>
-#include <boost/throw_exception.hpp>
-#include <boost/type_traits/integral_constant.hpp>
+#include "config.hpp"
+#include "detail/pe_info.hpp"
+#include "detail/elf_info.hpp"
+#include "detail/macho_info.hpp"
 
 #include <fstream>
-
-#include <boost/dll/detail/pe_info.hpp>
-#include <boost/dll/detail/elf_info.hpp>
-#include <boost/dll/detail/macho_info.hpp>
-
 #include <filesystem>
 #include <system_error>
 
@@ -34,7 +26,7 @@ namespace boost { namespace dll {
 * \brief Class that is capable of extracting different information from a library or binary file.
 * Currently understands ELF, MACH-O and PE formats on all the platforms.
 */
-class library_info: private boost::noncopyable {
+class library_info {
 private:
     std::ifstream f_;
 
@@ -48,32 +40,32 @@ private:
     } fmt_;
 
     /// @cond
-    inline static void throw_if_in_32bit_impl(boost::true_type /* is_32bit_platform */) {
-        boost::throw_exception(std::runtime_error("Not native format: 64bit binary"));
+    inline static void throw_if_in_32bit_impl(std::true_type /* is_32bit_platform */) {
+        throw std::runtime_error("Not native format: 64bit binary");
     }
 
-    inline static void throw_if_in_32bit_impl(boost::false_type /* is_32bit_platform */) noexcept {}
+    inline static void throw_if_in_32bit_impl(std::false_type /* is_32bit_platform */) noexcept {}
 
 
     inline static void throw_if_in_32bit() {
-        throw_if_in_32bit_impl( boost::integral_constant<bool, (sizeof(void*) == 4)>() );
+        throw_if_in_32bit_impl( std::integral_constant<bool, (sizeof(void*) == 4)>() );
     }
 
     static void throw_if_in_windows() {
 #if defined(_WIN32)
-        boost::throw_exception(std::runtime_error("Not native format: not a PE binary"));
+        throw std::runtime_error("Not native format: not a PE binary");
 #endif
     }
 
     static void throw_if_in_linux() {
-#if !defined(_WIN32) && !BOOST_OS_MACOS && !BOOST_OS_IOS
-        boost::throw_exception(std::runtime_error("Not native format: not an ELF binary"));
+#if !defined(_WIN32) && !defined(__APPLE__)
+        throw std::runtime_error("Not native format: not an ELF binary");
 #endif
     }
 
     static void throw_if_in_macos() {
-#if BOOST_OS_MACOS || BOOST_OS_IOS
-        boost::throw_exception(std::runtime_error("Not native format: not an Mach-O binary"));
+#if defined(__APPLE__)
+        throw std::runtime_error("Not native format: not an Mach-O binary");
 #endif
     }
 
@@ -103,12 +95,13 @@ private:
 
             fmt_ = fmt_macho_info64;
         } else {
-            boost::throw_exception(std::runtime_error("Unsupported binary format"));
+            throw std::runtime_error("Unsupported binary format");
         }
     }
     /// @endcond
 
 public:
+    library_info(library_info const &) = delete;
     /*!
     * Opens file with specified path and prepares for information extraction.
     * \param library_path Path to the binary file from which the info must be extracted.
@@ -117,15 +110,7 @@ public:
     */
     explicit library_info(const std::filesystem::path& library_path, bool throw_if_not_native_format = true)
         : f_(
-        #ifdef BOOST_DLL_USE_STD_FS
             library_path,
-        //  Copied from boost/filesystem/fstream.hpp
-        #elif defined(BOOST_WINDOWS_API)  && (!defined(_CPPLIB_VER) || _CPPLIB_VER < 405 || defined(_STLPORT_VERSION))
-            // !Dinkumware || early Dinkumware || STLPort masquerading as Dinkumware
-            library_path.string().c_str(),  // use narrow, since wide not available
-        #else  // use the native c_str, which will be narrow on POSIX, wide on Windows
-            library_path.c_str(),
-        #endif
             std::ios_base::in | std::ios_base::binary
         )
     {
@@ -150,8 +135,8 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::sections(f_);
         case fmt_macho_info64: return boost::dll::detail::macho_info64::sections(f_);
         };
-        BOOST_ASSERT(false);
-        BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
+        assert(false);
+        return {};
     }
 
     /*!
@@ -166,8 +151,8 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_);
         case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_);
         };
-        BOOST_ASSERT(false);
-        BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
+        assert(false);
+        return {};
     }
 
     /*!
@@ -183,8 +168,8 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_, section_name);
         case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_, section_name);
         };
-        BOOST_ASSERT(false);
-        BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
+        assert(false);
+        return {};
     }
 
 
@@ -198,8 +183,8 @@ public:
         case fmt_macho_info32: return boost::dll::detail::macho_info32::symbols(f_, section_name.c_str());
         case fmt_macho_info64: return boost::dll::detail::macho_info64::symbols(f_, section_name.c_str());
         };
-        BOOST_ASSERT(false);
-        BOOST_UNREACHABLE_RETURN(std::vector<std::string>())
+        assert(false);
+        return {};
     }
 };
 
