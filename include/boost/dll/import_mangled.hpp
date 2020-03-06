@@ -102,7 +102,7 @@ struct mangled_import_type<sequence<Args...>, true,false,false> //is function
     {
         return type(
                 std::make_shared<shared_library>(p.shared_lib()),
-                boost::addressof(p.get_function<Args>(name))...);
+                std::addressof(p.get_function<Args>(name))...);
     }
 };
 
@@ -143,7 +143,7 @@ struct mangled_import_type<sequence<T>, false, false, true> //is variable
     {
         return type(
                 std::make_shared<shared_library>(p.shared_lib()),
-                boost::addressof(p.get_variable<T>(name)));
+                std::addressof(p.get_variable<T>(name)));
     }
 
 };

@@ -133,7 +133,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(const std::filesystem::path& lib, const char
     typedef typename boost::dll::detail::import_type<T>::base_type type;
 
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(lib, mode);
-    return type(p, boost::addressof(p->get<T>(name)));
+    return type(p, std::addressof(p->get<T>(name)));
 }
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
@@ -150,7 +150,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(const shared_library& lib, const char* name)
     typedef typename boost::dll::detail::import_type<T>::base_type type;
 
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(lib);
-    return type(p, boost::addressof(p->get<T>(name)));
+    return type(p, std::addressof(p->get<T>(name)));
 }
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
@@ -167,7 +167,7 @@ BOOST_DLL_IMPORT_RESULT_TYPE import(BOOST_RV_REF(shared_library) lib, const char
     std::shared_ptr<boost::dll::shared_library> p = std::make_shared<boost::dll::shared_library>(
         std::move(lib)
     );
-    return type(p, boost::addressof(p->get<T>(name)));
+    return type(p, std::addressof(p->get<T>(name)));
 }
 
 //! \overload boost::dll::import(const std::filesystem::path& lib, const char* name, load_mode::type mode)
