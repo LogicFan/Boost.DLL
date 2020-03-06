@@ -126,7 +126,7 @@ template<typename Class, typename Lib>
 destructor<Class> load_dtor(Lib & lib, const mangled_storage_impl::dtor_sym & dt) {
     typedef typename destructor<Class>::standard_t standard_t;
     //@apolukhin That does NOT work this way with MSVC-14 x32 via memcpy. The x64 is different.
-    //standard_t dtor = &lib.template get< typename boost::remove_pointer<standard_t>::type >(dt);
+    //standard_t dtor = &lib.template get< typename std::remove_pointer<standard_t>::type >(dt);
     void * buf = &lib.template get<unsigned char>(dt);
     standard_t dtor;
     std::memcpy(&dtor, &buf, sizeof(dtor));
@@ -171,11 +171,11 @@ destructor<Class> load_dtor(Lib & lib, const mangled_storage_impl::dtor_sym & dt
 
     //see here for the abi http://mentorembedded.github.io/cxx-abi/abi.html#mangling-special-ctor-dtor
     if (!dt.D1.empty()) {
-        s = &lib.template get< typename boost::remove_pointer<stand>::type >(dt.D1);
+        s = &lib.template get< typename std::remove_pointer<stand>::type >(dt.D1);
     }
 
     if (!dt.D0.empty()) {
-        d = &lib.template get< typename boost::remove_pointer<delet>::type >(dt.D0);
+        d = &lib.template get< typename std::remove_pointer<delet>::type >(dt.D0);
     }
 
     return destructor<Class>(s,d);

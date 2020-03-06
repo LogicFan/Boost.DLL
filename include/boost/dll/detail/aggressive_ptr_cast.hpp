@@ -9,9 +9,6 @@
 
 #include <boost/dll/config.hpp>
 
-#include <boost/core/addressof.hpp>
-#include <boost/type_traits/remove_pointer.hpp>
-#include <boost/type_traits/remove_reference.hpp>
 #include <cstring>              // std::memcpy
 
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__ * 100 + __GNUC_MINOR__ > 301)
@@ -32,8 +29,8 @@ BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value ||
     );
 
     static_assert(
-        std::is_void< typename boost::remove_pointer<To>::type >::value
-        || std::is_void< typename boost::remove_pointer<From>::type >::value,
+        std::is_void< typename std::remove_pointer<To>::type >::value
+        || std::is_void< typename std::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
@@ -60,16 +57,16 @@ BOOST_FORCEINLINE typename std::enable_if<!(!std::is_reference<To>::value || std
     );
 
     static_assert(
-        std::is_void< typename boost::remove_pointer<From>::type >::value,
+        std::is_void< typename std::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
     static_assert(
-        sizeof(v) == sizeof(typename boost::remove_reference<To>::type*),
+        sizeof(v) == sizeof(typename std::remove_reference<To>::type*),
         "Pointer to function and pointer to object differ in size on your platform."
     );
     return static_cast<To>(
-        **reinterpret_cast<typename boost::remove_reference<To>::type**>(
+        **reinterpret_cast<typename std::remove_reference<To>::type**>(
             v
         )
     );
@@ -89,7 +86,7 @@ BOOST_FORCEINLINE typename std::enable_if<!(!std::is_member_pointer<To>::value |
     );
 
     static_assert(
-        std::is_void< typename boost::remove_pointer<From>::type >::value,
+        std::is_void< typename std::remove_pointer<From>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
@@ -108,7 +105,7 @@ BOOST_FORCEINLINE typename std::enable_if<!(std::is_member_pointer<To>::value ||
     );
 
     static_assert(
-        std::is_void< typename boost::remove_pointer<To>::type >::value,
+        std::is_void< typename std::remove_pointer<To>::type >::value,
         "`agressive_ptr_cast` function must be used only for casting to or from void pointers."
     );
 
