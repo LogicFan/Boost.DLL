@@ -134,7 +134,7 @@ namespace detail {
     inline std::filesystem::path symbol_location(const T& symbol, std::error_code& ec) {
         ec.clear();
         return boost::dll::symbol_location_ptr(
-            boost::dll::detail::aggressive_ptr_cast<const void*>(boost::addressof(symbol)),
+            boost::dll::detail::aggressive_ptr_cast<const void*>(std::addressof(symbol)),
             ec
         );
     }
@@ -153,7 +153,7 @@ namespace detail {
         std::filesystem::path ret;
         std::error_code ec;
         ret = boost::dll::symbol_location_ptr(
-            boost::dll::detail::aggressive_ptr_cast<const void*>(boost::addressof(symbol)),
+            boost::dll::detail::aggressive_ptr_cast<const void*>(std::addressof(symbol)),
             ec
         );
 
