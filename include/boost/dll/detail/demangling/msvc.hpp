@@ -9,12 +9,7 @@
 #include <boost/dll/detail/demangling/mangled_storage_base.hpp>
 #include <iterator>
 #include <algorithm>
-#include <boost/type_traits/is_const.hpp>
-#include <boost/type_traits/is_volatile.hpp>
-#include <boost/type_traits/is_lvalue_reference.hpp>
-#include <boost/type_traits/is_rvalue_reference.hpp>
-#include <boost/type_traits/function_traits.hpp>
-#include <boost/type_traits/remove_reference.hpp>
+#include <type_traits>
 
 #include <boost/spirit/home/x3.hpp>
 
@@ -117,23 +112,23 @@ namespace parser
     inline auto const_rule_impl(true_type )  {return x3::space >> "const";};
     inline auto const_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
-    auto const_rule() {using t = is_const<typename remove_reference<T>::type>; return const_rule_impl(t());}
+    auto const_rule() {using t = std::is_const<typename std::remove_reference<T>::type>; return const_rule_impl(t());}
 
     inline auto volatile_rule_impl(true_type )  {return x3::space >> "volatile";};
     inline auto volatile_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
-    auto volatile_rule() {using t = is_volatile<typename remove_reference<T>::type>; return volatile_rule_impl(t());}
+    auto volatile_rule() {using t = std::is_volatile<typename std::remove_reference<T>::type>; return volatile_rule_impl(t());}
 
 
     inline auto inv_const_rule_impl(true_type )  {return "const" >>  x3::space ;};
     inline auto inv_const_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
-    auto inv_const_rule() {using t = is_const<typename remove_reference<T>::type>; return inv_const_rule_impl(t());}
+    auto inv_const_rule() {using t = std::is_const<typename std::remove_reference<T>::type>; return inv_const_rule_impl(t());}
 
     inline auto inv_volatile_rule_impl(true_type )  {return "volatile" >> x3::space;};
     inline auto inv_volatile_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
-    auto inv_volatile_rule() {using t = is_volatile<typename remove_reference<T>::type>; return inv_volatile_rule_impl(t());}
+    auto inv_volatile_rule() {using t = std::is_volatile<typename std::remove_reference<T>::type>; return inv_volatile_rule_impl(t());}
 
 
     inline auto reference_rule_impl(false_type, false_type) {return x3::eps;}
@@ -142,7 +137,7 @@ namespace parser
 
 
     template<typename T>
-    auto reference_rule() {using t_l = is_lvalue_reference<T>; using t_r = is_rvalue_reference<T>; return reference_rule_impl(t_l(), t_r());}
+    auto reference_rule() {using t_l = std::is_lvalue_reference<T>; using t_r = std::is_rvalue_reference<T>; return reference_rule_impl(t_l(), t_r());}
 
     auto const class_ = ("class" | x3::lit("struct"));
 
@@ -232,7 +227,7 @@ template<typename Func> std::string mangled_storage_impl::get_function(const std
     namespace x3 = spirit::x3;
     using namespace parser;
     using func_type = Func*;
-    using return_type = typename function_traits<Func>::result_type;
+    using return_type = typename std::function_traits<Func>::result_type;
     std::string return_type_name = get_name<return_type>();
 
 
@@ -270,7 +265,7 @@ std::string mangled_storage_impl::get_mem_fn(const std::string &name) const
     namespace x3 = spirit::x3;
     using namespace parser;
     using func_type = Func*;
-    using return_type = typename function_traits<Func>::result_type;
+    using return_type = typename std::function_traits<Func>::result_type;
     auto return_type_name = get_name<return_type>();
 
 

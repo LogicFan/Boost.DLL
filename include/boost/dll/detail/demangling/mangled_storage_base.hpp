@@ -11,11 +11,11 @@
 #include <map>
 #include <boost/dll/detail/demangling/demangle_symbol.hpp>
 #include <boost/dll/library_info.hpp>
-#include <boost/type_traits/remove_reference.hpp>
 
 #include <filesystem>
 #include <system_error>
 #include <typeindex>
+#include <type_traits>
 
 namespace boost { namespace dll { namespace detail {
 
